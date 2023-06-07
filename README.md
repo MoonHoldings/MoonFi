@@ -1,6 +1,6 @@
-# xnft-quickstart
+# MoonFi
 
-Quickstart repo for building your own xNFT.
+xNFT App for MoonHoldings
 
 ## Developing
 
