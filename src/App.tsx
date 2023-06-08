@@ -2,16 +2,28 @@ import { registerRootComponent } from "expo";
 import { RecoilRoot } from "recoil";
 import { ActivityIndicator, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { useFonts, Inter_900Black } from "@expo-google-fonts/dev";
+import {
+  useFonts,
+  Inter_700Bold,
+  Inter_600SemiBold,
+  Poppins_700Bold,
+  Poppins_300Light,
+  Poppins_400Regular,
+} from "@expo-google-fonts/dev";
 import { HomeScreen } from "./screens/HomeScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Header from "./components/Header";
+import Fonts from "./utils/Fonts";
 
 const Stack = createNativeStackNavigator();
 
 function App() {
   let [fontsLoaded] = useFonts({
-    Inter_900Black,
+    [Fonts.InterBold]: Inter_700Bold,
+    [Fonts.InterSemiBold]: Inter_600SemiBold,
+    [Fonts.PoppinsBold]: Poppins_700Bold,
+    [Fonts.PoppinsLight]: Poppins_300Light,
+    [Fonts.PoppinsRegular]: Poppins_400Regular,
   });
 
   if (!fontsLoaded) {
@@ -30,15 +42,12 @@ function App() {
             headerStyle: {
               backgroundColor: "#1F2126",
             },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
             headerTitleAlign: "center",
+            headerShadowVisible: false,
           }}
         >
           <Stack.Screen
-            options={{ headerTitle: (props) => <Header /> }}
+            options={{ headerTitle: () => <Header /> }}
             name="Home"
             component={HomeScreen}
           />
