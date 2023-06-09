@@ -1,2 +1,1 @@
-export * from "./MoonHoldingsLogo";
-export * from "./SharkyLogo";
+export * from "./MoonHoldingsLogo"

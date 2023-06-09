@@ -1,9 +1,9 @@
-import { Text, View, TouchableOpacity } from "react-native";
-import tw from "twrnc";
-import { Screen } from "../components/Screen";
-import Fonts from "../utils/Fonts";
+import { Text, View, Pressable } from "react-native"
+import tw from "twrnc"
+import { Screen } from "../components/Screen"
+import Fonts from "../utils/Fonts"
 
-export function HomeScreen() {
+export function HomeScreen({ navigation }: any) {
   return (
     <Screen style={tw`flex bg-black`}>
       <View style={tw`flex flex-col flex-1 justify-around items-center`}>
@@ -28,7 +28,7 @@ export function HomeScreen() {
         <View style={tw`flex w-full`}>
           <View style={tw`flex flex-row items-center justify-around w-full`}>
             <View style={tw`flex flex-row justify-center items-center`}>
-              <TouchableOpacity>
+              <Pressable onPress={() => navigation.navigate("Lend")}>
                 <Text
                   style={{
                     ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -37,7 +37,7 @@ export function HomeScreen() {
                 >
                   Lend
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
               <Text
                 style={{
                   ...tw`text-[16px] text-white`,
@@ -47,7 +47,7 @@ export function HomeScreen() {
                 {" "}
                 or{" "}
               </Text>
-              <TouchableOpacity>
+              <Pressable>
                 <Text
                   style={{
                     ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -56,7 +56,7 @@ export function HomeScreen() {
                 >
                   Borrow
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
             <View style={tw`flex flex-col`}>
               <View style={tw`flex flex-row justify-center`}>
@@ -70,7 +70,7 @@ export function HomeScreen() {
                 </Text>
               </View>
               <View style={tw`flex flex-row justify-center`}>
-                <TouchableOpacity>
+                <Pressable>
                   <Text
                     style={{
                       ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -79,7 +79,7 @@ export function HomeScreen() {
                   >
                     Offers
                   </Text>
-                </TouchableOpacity>
+                </Pressable>
                 <Text
                   style={{
                     ...tw`text-[16px] text-white`,
@@ -89,7 +89,7 @@ export function HomeScreen() {
                   {" "}
                   or{" "}
                 </Text>
-                <TouchableOpacity>
+                <Pressable>
                   <Text
                     style={{
                       ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -98,23 +98,17 @@ export function HomeScreen() {
                   >
                     Loans
                   </Text>
-                </TouchableOpacity>
+                </Pressable>
               </View>
             </View>
           </View>
-          <View
-            style={tw`flex flex-row items-center justify-around w-full mt-4`}
-          >
+          <View style={tw`flex flex-row items-center justify-around w-full mt-4`}>
             <Text style={tw`text-[24px]`}>👇</Text>
             <Text style={tw`text-[24px]`}>👇</Text>
           </View>
-          <View
-            style={tw`flex flex-row items-center justify-around w-full mt-4`}
-          >
+          <View style={tw`flex flex-row items-center justify-around w-full mt-4`}>
             <View style={tw`flex flex-col items-center justify-center w-[45%]`}>
-              <TouchableOpacity
-                style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2`}
-              >
+              <Pressable style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2`} onPress={() => navigation.navigate("Lend")}>
                 <Text
                   style={{
                     ...tw`text-[#63ECD2] text-[14px]`,
@@ -123,10 +117,8 @@ export function HomeScreen() {
                 >
                   Lend
                 </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2 mt-4`}
-              >
+              </Pressable>
+              <Pressable style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2 mt-4`}>
                 <Text
                   style={{
                     ...tw`text-[#63ECD2] text-[14px]`,
@@ -135,12 +127,10 @@ export function HomeScreen() {
                 >
                   Borrow
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
             <View style={tw`flex flex-col items-center justify-center w-[45%]`}>
-              <TouchableOpacity
-                style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2`}
-              >
+              <Pressable style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2`}>
                 <Text
                   style={{
                     ...tw`text-[#63ECD2] text-[14px]`,
@@ -149,10 +139,8 @@ export function HomeScreen() {
                 >
                   Offer
                 </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2 mt-4`}
-              >
+              </Pressable>
+              <Pressable style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2 mt-4`}>
                 <Text
                   style={{
                     ...tw`text-[#63ECD2] text-[14px]`,
@@ -161,11 +149,11 @@ export function HomeScreen() {
                 >
                   Loans
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </View>
         </View>
       </View>
     </Screen>
-  );
+  )
 }
