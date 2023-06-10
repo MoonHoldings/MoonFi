@@ -1,13 +1,14 @@
-import { Text, View, Pressable } from "react-native"
-import tw from "twrnc"
-import { Screen } from "../components/Screen"
-import Fonts from "../utils/Fonts"
+import { Text, View, Pressable } from "react-native";
+import tw from "twrnc";
+import { Screen } from "../components/Screen";
+import Fonts from "../utils/Fonts";
+import { Footer } from "../components";
 
 export function HomeScreen({ navigation }: any) {
   return (
     <Screen style={tw`flex bg-black`}>
-      <View style={tw`flex flex-col flex-1 justify-around items-center`}>
-        <View style={tw`flex justify-center`}>
+      <View style={tw`flex flex-col flex-1 justify-between items-center`}>
+        <View style={tw`flex justify-center mt-[3rem]`}>
           <Text
             style={{
               ...tw`text-white text-[24px] text-center`,
@@ -102,58 +103,15 @@ export function HomeScreen({ navigation }: any) {
               </View>
             </View>
           </View>
-          <View style={tw`flex flex-row items-center justify-around w-full mt-4`}>
+          <View
+            style={tw`flex flex-row items-center justify-around w-full mt-4`}
+          >
             <Text style={tw`text-[24px]`}>👇</Text>
             <Text style={tw`text-[24px]`}>👇</Text>
           </View>
-          <View style={tw`flex flex-row items-center justify-around w-full mt-4`}>
-            <View style={tw`flex flex-col items-center justify-center w-[45%]`}>
-              <Pressable style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2`} onPress={() => navigation.navigate("Lend")}>
-                <Text
-                  style={{
-                    ...tw`text-[#63ECD2] text-[14px]`,
-                    fontFamily: Fonts.InterSemiBold,
-                  }}
-                >
-                  Lend
-                </Text>
-              </Pressable>
-              <Pressable style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2 mt-4`}>
-                <Text
-                  style={{
-                    ...tw`text-[#63ECD2] text-[14px]`,
-                    fontFamily: Fonts.InterSemiBold,
-                  }}
-                >
-                  Borrow
-                </Text>
-              </Pressable>
-            </View>
-            <View style={tw`flex flex-col items-center justify-center w-[45%]`}>
-              <Pressable style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2`}>
-                <Text
-                  style={{
-                    ...tw`text-[#63ECD2] text-[14px]`,
-                    fontFamily: Fonts.InterSemiBold,
-                  }}
-                >
-                  Offer
-                </Text>
-              </Pressable>
-              <Pressable style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2 mt-4`}>
-                <Text
-                  style={{
-                    ...tw`text-[#63ECD2] text-[14px]`,
-                    fontFamily: Fonts.InterSemiBold,
-                  }}
-                >
-                  Loans
-                </Text>
-              </Pressable>
-            </View>
-          </View>
+          <Footer navigation={navigation} />
         </View>
       </View>
     </Screen>
-  )
+  );
 }

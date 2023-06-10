@@ -1,1 +1,2 @@
-export * from "./MoonHoldingsLogo"
+export * from "./MoonHoldingsLogo";
+export * from "./SearchIcon";
