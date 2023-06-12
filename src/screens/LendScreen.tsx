@@ -3,7 +3,7 @@ import { FlatList, View, Text, Pressable, Image } from "react-native"
 import tw from "twrnc"
 import { Search, Screen, Footer, OrderBookRow } from "../components"
 import Fonts from "../utils/Fonts"
-import { TEST_ENV } from "@env"
+import { LendModal } from "../modals/LendModal"
 
 const Header = () => (
   <View style={tw`flex w-full flex-row justify-around items-center mt-4 pr-[20px]`}>
@@ -33,12 +33,18 @@ const Header = () => (
 
 export function LendScreen({ navigation }: any) {
   const [text, onChangeText] = useState("")
+  const [lendModalVisible, setLendModalVisible] = useState(false)
 
   return (
     <Screen style={tw`flex bg-black`}>
+      <LendModal visible={lendModalVisible} onClose={() => setLendModalVisible(false)} />
       <Search value={text} onChangeText={onChangeText} />
       <Header />
-      <FlatList showsVerticalScrollIndicator={false} data={[1, 2, 3, 2, 3, 2, 3, 2, 3]} renderItem={({ item }) => <OrderBookRow actionLabel="Lend" />} />
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={[1, 2, 3, 2, 3, 2, 3, 2, 3]}
+        renderItem={({ item }) => <OrderBookRow actionLabel="Lend" onActionPress={() => setLendModalVisible(true)} />}
+      />
       <Footer navigation={navigation} activeScreen={"Lend"} />
     </Screen>
   )

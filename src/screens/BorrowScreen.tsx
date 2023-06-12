@@ -3,6 +3,7 @@ import { FlatList, View, Text, Pressable, Image } from "react-native"
 import tw from "twrnc"
 import { Search, Screen, Footer, OrderBookRow } from "../components"
 import Fonts from "../utils/Fonts"
+import { BorrowModal } from "../modals/BorrowModal"
 
 const Header = () => (
   <View style={tw`flex w-full flex-row justify-around items-center mt-4 pr-[32px]`}>
@@ -32,12 +33,14 @@ const Header = () => (
 
 export function BorrowScreen({ navigation }: any) {
   const [text, onChangeText] = useState("")
+  const [modalVisible, setModalVisible] = useState(false)
 
   return (
     <Screen style={tw`flex bg-black`}>
+      <BorrowModal visible={modalVisible} onClose={() => setModalVisible(false)} />
       <Search value={text} onChangeText={onChangeText} />
       <Header />
-      <FlatList showsVerticalScrollIndicator={false} data={[1, 2, 3, 2, 3, 2, 3, 2, 3]} renderItem={({ item }) => <OrderBookRow actionLabel="Borrow" />} />
+      <FlatList showsVerticalScrollIndicator={false} data={[1, 2, 3, 2, 3, 2, 3, 2, 3]} renderItem={({ item }) => <OrderBookRow actionLabel="Borrow" onActionPress={() => setModalVisible(true)} />} />
       <Footer navigation={navigation} activeScreen={"Borrow"} />
     </Screen>
   )

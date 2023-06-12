@@ -2,7 +2,7 @@ import { registerRootComponent } from "expo"
 import { RecoilRoot } from "recoil"
 import { ActivityIndicator, View } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
-import { useFonts, Inter_400Regular, Inter_700Bold, Inter_600SemiBold, Poppins_700Bold, Poppins_300Light, Poppins_400Regular } from "@expo-google-fonts/dev"
+import { useFonts, Inter_400Regular, Inter_700Bold, Inter_600SemiBold, Poppins_700Bold, Poppins_300Light, Poppins_400Regular, Poppins_600SemiBold } from "@expo-google-fonts/dev"
 import { HomeScreen, LendScreen, BorrowScreen } from "./screens"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { Header } from "./components"
@@ -18,6 +18,7 @@ function App() {
     [Fonts.PoppinsBold]: Poppins_700Bold,
     [Fonts.PoppinsLight]: Poppins_300Light,
     [Fonts.PoppinsRegular]: Poppins_400Regular,
+    [Fonts.PoppinsSemiBold]: Poppins_600SemiBold,
   })
 
   if (!fontsLoaded) {
@@ -33,6 +34,7 @@ function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
+            animation: "fade",
             headerStyle: {
               backgroundColor: "#1F2126",
             },

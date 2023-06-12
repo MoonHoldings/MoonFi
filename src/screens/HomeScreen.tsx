@@ -1,4 +1,4 @@
-import { Text, View, Pressable } from "react-native"
+import { Text, View, TouchableOpacity } from "react-native"
 import tw from "twrnc"
 import { Screen } from "../components/Screen"
 import Fonts from "../utils/Fonts"
@@ -29,7 +29,7 @@ export function HomeScreen({ navigation }: any) {
         <View style={tw`flex w-full`}>
           <View style={tw`flex flex-row items-center justify-around w-full`}>
             <View style={tw`flex flex-row justify-center items-center`}>
-              <Pressable onPress={() => navigation.navigate("Lend")}>
+              <TouchableOpacity onPress={() => navigation.navigate("Lend")}>
                 <Text
                   style={{
                     ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -38,7 +38,7 @@ export function HomeScreen({ navigation }: any) {
                 >
                   Lend
                 </Text>
-              </Pressable>
+              </TouchableOpacity>
               <Text
                 style={{
                   ...tw`text-[16px] text-white`,
@@ -48,7 +48,7 @@ export function HomeScreen({ navigation }: any) {
                 {" "}
                 or{" "}
               </Text>
-              <Pressable onPress={() => navigation.navigate("Borrow")}>
+              <TouchableOpacity onPress={() => navigation.navigate("Borrow")}>
                 <Text
                   style={{
                     ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -57,7 +57,7 @@ export function HomeScreen({ navigation }: any) {
                 >
                   Borrow
                 </Text>
-              </Pressable>
+              </TouchableOpacity>
             </View>
             <View style={tw`flex flex-col`}>
               <View style={tw`flex flex-row justify-center`}>
@@ -71,7 +71,7 @@ export function HomeScreen({ navigation }: any) {
                 </Text>
               </View>
               <View style={tw`flex flex-row justify-center`}>
-                <Pressable>
+                <TouchableOpacity>
                   <Text
                     style={{
                       ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -80,7 +80,7 @@ export function HomeScreen({ navigation }: any) {
                   >
                     Offers
                   </Text>
-                </Pressable>
+                </TouchableOpacity>
                 <Text
                   style={{
                     ...tw`text-[16px] text-white`,
@@ -90,7 +90,7 @@ export function HomeScreen({ navigation }: any) {
                   {" "}
                   or{" "}
                 </Text>
-                <Pressable>
+                <TouchableOpacity>
                   <Text
                     style={{
                       ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -99,7 +99,7 @@ export function HomeScreen({ navigation }: any) {
                   >
                     Loans
                   </Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
