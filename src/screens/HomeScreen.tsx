@@ -1,8 +1,8 @@
-import { Text, View, Pressable } from "react-native";
-import tw from "twrnc";
-import { Screen } from "../components/Screen";
-import Fonts from "../utils/Fonts";
-import { Footer } from "../components";
+import { Text, View, Pressable } from "react-native"
+import tw from "twrnc"
+import { Screen } from "../components/Screen"
+import Fonts from "../utils/Fonts"
+import { Footer } from "../components"
 
 export function HomeScreen({ navigation }: any) {
   return (
@@ -48,7 +48,7 @@ export function HomeScreen({ navigation }: any) {
                 {" "}
                 or{" "}
               </Text>
-              <Pressable>
+              <Pressable onPress={() => navigation.navigate("Borrow")}>
                 <Text
                   style={{
                     ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -103,9 +103,7 @@ export function HomeScreen({ navigation }: any) {
               </View>
             </View>
           </View>
-          <View
-            style={tw`flex flex-row items-center justify-around w-full mt-4`}
-          >
+          <View style={tw`flex flex-row items-center justify-around w-full mt-4`}>
             <Text style={tw`text-[24px]`}>👇</Text>
             <Text style={tw`text-[24px]`}>👇</Text>
           </View>
@@ -113,5 +111,5 @@ export function HomeScreen({ navigation }: any) {
         </View>
       </View>
     </Screen>
-  );
+  )
 }

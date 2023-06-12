@@ -1,12 +1,12 @@
-import { View, TextInput, Platform, ActivityIndicator } from "react-native";
-import { SearchIcon } from "../svg";
-import Fonts from "../utils/Fonts";
-import tw from "twrnc";
+import { View, TextInput, Platform, ActivityIndicator, Image } from "react-native"
+import { SearchIcon } from "../svg"
+import Fonts from "../utils/Fonts"
+import tw from "twrnc"
 
 type Props = {
-  onChangeText: any;
-  value: string;
-};
+  onChangeText: any
+  value: string
+}
 
 export const Search = ({ onChangeText, value }: Props) => {
   return (
@@ -15,7 +15,7 @@ export const Search = ({ onChangeText, value }: Props) => {
         ...tw`border border-2 border-[#63ECD2] rounded-md w-full flex flex-row items-center px-[16px]`,
       }}
     >
-      <SearchIcon />
+      <Image source={require("/assets/search.svg")} style={tw`h-[12px] w-[12px]`} />
       <TextInput
         style={{
           ...tw`rounded-md w-full items-center text-[#63ECD2] h-full text-[12px] py-[16px] ml-[9px] bg-black`,
@@ -31,5 +31,5 @@ export const Search = ({ onChangeText, value }: Props) => {
       />
       <ActivityIndicator color="#63ECD2" />
     </View>
-  );
-};
+  )
+}

@@ -3,10 +3,9 @@ import { FlatList, View, Text, Pressable, Image } from "react-native"
 import tw from "twrnc"
 import { Search, Screen, Footer, OrderBookRow } from "../components"
 import Fonts from "../utils/Fonts"
-import { TEST_ENV } from "@env"
 
 const Header = () => (
-  <View style={tw`flex w-full flex-row justify-around items-center mt-4 pr-[20px]`}>
+  <View style={tw`flex w-full flex-row justify-around items-center mt-4 pr-[32px]`}>
     <View style={tw`flex flex-1 justify-center`} />
     <View style={tw`flex flex-1 justify-center`}>
       <Text style={{ ...tw`text-[12px] text-[#666666] text-center`, fontFamily: Fonts.PoppinsRegular }}>Pool</Text>
@@ -31,15 +30,15 @@ const Header = () => (
   </View>
 )
 
-export function LendScreen({ navigation }: any) {
+export function BorrowScreen({ navigation }: any) {
   const [text, onChangeText] = useState("")
 
   return (
     <Screen style={tw`flex bg-black`}>
       <Search value={text} onChangeText={onChangeText} />
       <Header />
-      <FlatList showsVerticalScrollIndicator={false} data={[1, 2, 3, 2, 3, 2, 3, 2, 3]} renderItem={({ item }) => <OrderBookRow actionLabel="Lend" />} />
-      <Footer navigation={navigation} activeScreen={"Lend"} />
+      <FlatList showsVerticalScrollIndicator={false} data={[1, 2, 3, 2, 3, 2, 3, 2, 3]} renderItem={({ item }) => <OrderBookRow actionLabel="Borrow" />} />
+      <Footer navigation={navigation} activeScreen={"Borrow"} />
     </Screen>
   )
 }
