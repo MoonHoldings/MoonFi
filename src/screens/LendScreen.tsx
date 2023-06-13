@@ -38,7 +38,7 @@ export function LendScreen({ navigation }: any) {
   return (
     <Screen style={tw`flex bg-black`}>
       <LendModal visible={lendModalVisible} onClose={() => setLendModalVisible(false)} />
-      <Search value={text} onChangeText={onChangeText} />
+      <Search value={text} onChangeText={onChangeText} loading={false} />
       <DataHeader />
       <FlatList showsVerticalScrollIndicator={false} data={[1]} renderItem={({ item }) => <OrderBookRow actionLabel="Lend" onActionPress={() => setLendModalVisible(true)} />} />
       <Footer navigation={navigation} activeScreen={"Lend"} />

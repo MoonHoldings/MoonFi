@@ -1,14 +1,14 @@
 import { View, TextInput, Platform, ActivityIndicator, Image } from "react-native"
-import { SearchIcon } from "../svg"
 import Fonts from "../utils/Fonts"
 import tw from "twrnc"
 
 type Props = {
   onChangeText: any
   value: string
+  loading: boolean
 }
 
-export const Search = ({ onChangeText, value }: Props) => {
+export const Search = ({ onChangeText, value, loading }: Props) => {
   return (
     <View
       style={{
@@ -29,7 +29,7 @@ export const Search = ({ onChangeText, value }: Props) => {
         underlineColorAndroid="transparent"
         returnKeyType="search"
       />
-      <ActivityIndicator color="#63ECD2" />
+      {loading && <ActivityIndicator color="#63ECD2" />}
     </View>
   )
 }

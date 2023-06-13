@@ -38,7 +38,7 @@ export function BorrowScreen({ navigation }: any) {
   return (
     <Screen style={tw`flex bg-black`}>
       <BorrowModal visible={modalVisible} onClose={() => setModalVisible(false)} />
-      <Search value={text} onChangeText={onChangeText} />
+      <Search value={text} onChangeText={onChangeText} loading={false} />
       <DataHeader />
       <FlatList showsVerticalScrollIndicator={false} data={[1, 2, 3, 2, 3, 2, 3, 2, 3]} renderItem={({ item }) => <OrderBookRow actionLabel="Borrow" onActionPress={() => setModalVisible(true)} />} />
       <Footer navigation={navigation} activeScreen={"Borrow"} />
