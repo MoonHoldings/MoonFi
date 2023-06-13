@@ -3,7 +3,7 @@ import { RecoilRoot } from "recoil"
 import { ActivityIndicator, View } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { useFonts, Inter_400Regular, Inter_700Bold, Inter_600SemiBold, Poppins_700Bold, Poppins_300Light, Poppins_400Regular, Poppins_600SemiBold } from "@expo-google-fonts/dev"
-import { HomeScreen, LendScreen, BorrowScreen } from "./screens"
+import { HomeScreen, LendScreen, BorrowScreen, OffersScreen } from "./screens"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { Header } from "./components"
 import Fonts from "./utils/Fonts"
@@ -47,6 +47,7 @@ function App() {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Lend" component={LendScreen} />
           <Stack.Screen name="Borrow" component={BorrowScreen} />
+          <Stack.Screen name="Offers" component={OffersScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </RecoilRoot>

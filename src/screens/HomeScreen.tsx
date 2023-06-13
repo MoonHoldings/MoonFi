@@ -71,7 +71,7 @@ export function HomeScreen({ navigation }: any) {
                 </Text>
               </View>
               <View style={tw`flex flex-row justify-center`}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("Offers")}>
                   <Text
                     style={{
                       ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -90,7 +90,7 @@ export function HomeScreen({ navigation }: any) {
                   {" "}
                   or{" "}
                 </Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("Loans")}>
                   <Text
                     style={{
                       ...tw`text-[16px] text-[#63ECD2] underline`,

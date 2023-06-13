@@ -1,4 +1,4 @@
-import { Modal, View, Image, TouchableOpacity, Text, TextInput, Platform } from "react-native"
+import { Modal, View, Image, TouchableOpacity, Text, TextInput, Platform, ScrollView } from "react-native"
 import tw from "twrnc"
 import { Header, Screen } from "../components"
 import Fonts from "../utils/Fonts"
@@ -54,11 +54,32 @@ export const BorrowModal = ({ visible, onClose }: { visible: boolean; onClose?: 
             </View>
           </View>
           <View style={tw`w-full h-[1px] bg-[#ffffff1a] my-3`} />
+          <View style={tw`flex flex-1`}>
+            <ScrollView>
+              <View style={tw`flex flex-1 flex-row w-full justify-between flex-wrap bg-color-400`}>
+                <TouchableOpacity style={tw`bg-black rounded-md w-[31%] flex justify-center items-center py-[8px] mb-2`}>
+                  <Image source={{ uri: "https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsharx.05c4d190.png&w=128&q=75" }} style={tw`w-18 h-18 rounded-md`} />
+                  <Text style={{ ...tw`text-white text-[14px] mt-1`, fontFamily: Fonts.InterBold }}>sharx</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={tw`bg-black rounded-md w-[31%] flex justify-center items-center py-[8px] mb-2`}>
+                  <Image source={{ uri: "https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsharx.05c4d190.png&w=128&q=75" }} style={tw`w-18 h-18 rounded-md`} />
+                  <Text style={{ ...tw`text-white text-[14px] mt-1`, fontFamily: Fonts.InterBold }}>sharx</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={tw`bg-black rounded-md w-[31%] flex justify-center items-center py-[8px] mb-2`}>
+                  <Image source={{ uri: "https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsharx.05c4d190.png&w=128&q=75" }} style={tw`w-18 h-18 rounded-md`} />
+                  <Text style={{ ...tw`text-white text-[14px] mt-1`, fontFamily: Fonts.InterBold }}>sharx</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={tw`bg-black rounded-md w-[31%] flex justify-center items-center py-[8px]`}>
+                  <Image source={{ uri: "https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsharx.05c4d190.png&w=128&q=75" }} style={tw`w-18 h-18 rounded-md`} />
+                  <Text style={{ ...tw`text-white text-[14px] mt-1`, fontFamily: Fonts.InterBold }}>sharx</Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+          </View>
           <View style={tw`w-full h-[1px] bg-[#ffffff1a] my-4`} />
           <View style={tw`flex flex-row w-full items-center justify-between`}>
             <Text style={{ ...tw`text-white text-[11px]`, fontFamily: Fonts.InterSemiBold }}>Selected NFT</Text>
             <View style={tw`flex flex-row items-center`}>
-              <Image source={require("/assets/sol.svg")} style={tw`w-3 h-3 mx-[4px]`} />
               <Text style={{ ...tw`text-white text-[11px]`, fontFamily: Fonts.InterSemiBold }}>0</Text>
             </View>
           </View>
