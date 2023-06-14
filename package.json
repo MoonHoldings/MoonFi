@@ -8,6 +8,7 @@
     "dev": "cross-env BROWSER=none expo start --web & npx xnft --iframe http://localhost:19006"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.15",
     "@coral-xyz/anchor": "^0.27.0",
     "@coral-xyz/common-public": "^0.2.0-latest.3375",
     "@coral-xyz/xnft-cli": "^0.6.11-latest.5487",
@@ -20,12 +21,14 @@
     "@solana/web3.js": "^1.73.0",
     "commander": "^9.4.1",
     "cross-env": "^7.0.3",
+    "crypto-js": "^4.1.1",
     "expo": "~48.0.7",
     "expo-constants": "~14.2.1",
     "expo-linking": "~4.0.1",
     "expo-status-bar": "~1.4.4",
     "fast-glob": "^3.2.12",
     "glob": "^8.0.3",
+    "graphql": "^16.6.0",
     "jszip": "^3.10.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -46,6 +49,7 @@
   "devDependencies": {
     "@babel/core": "^7.21.3",
     "@expo/webpack-config": "^18.0.1",
+    "@types/crypto-js": "^4.1.1",
     "@types/react": "~18.0.28",
     "@types/react-native": "~0.71.3",
     "react-native-dotenv": "^3.4.8",

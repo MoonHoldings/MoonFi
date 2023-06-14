@@ -6,7 +6,11 @@ export const Footer = ({ navigation, activeScreen }: any) => {
   return (
     <View style={tw`flex flex-row items-center justify-around w-full mt-4`}>
       <View style={tw`flex flex-col items-center justify-center w-[45%]`}>
-        <TouchableOpacity style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2 ${activeScreen === "Lend" ? "bg-[#63ECD2]" : ""}`} onPress={() => navigation.navigate("Lend")}>
+        <TouchableOpacity
+          disabled={activeScreen === "Lend"}
+          style={tw`border border-2 border-[#63ECD2] rounded-md w-full items-center py-2 ${activeScreen === "Lend" ? "bg-[#63ECD2]" : ""}`}
+          onPress={() => navigation.navigate("Lend")}
+        >
           <Text
             style={{
               ...tw`${activeScreen === "Lend" ? "text-black" : "text-[#63ECD2]"} text-[14px]`,

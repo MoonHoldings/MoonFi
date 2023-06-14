@@ -7,6 +7,8 @@ import { HomeScreen, LendScreen, BorrowScreen, OffersScreen, LoansScreen } from 
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { Header } from "./components"
 import Fonts from "./utils/Fonts"
+import { ApolloProvider } from "@apollo/client"
+import client from "./utils/apollo-client"
 
 const Stack = createNativeStackNavigator()
 
@@ -30,28 +32,30 @@ function App() {
   }
 
   return (
-    <RecoilRoot>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            animation: "fade",
-            headerStyle: {
-              backgroundColor: "#1F2126",
-            },
-            headerTitleAlign: "center",
-            headerShadowVisible: false,
-            headerTitle: () => <Header />,
-            headerTintColor: "#ffffff",
-          }}
-        >
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Lend" component={LendScreen} />
-          <Stack.Screen name="Borrow" component={BorrowScreen} />
-          <Stack.Screen name="Offers" component={OffersScreen} />
-          <Stack.Screen name="Loans" component={LoansScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </RecoilRoot>
+    <ApolloProvider client={client}>
+      <RecoilRoot>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              animation: "fade",
+              headerStyle: {
+                backgroundColor: "#1F2126",
+              },
+              headerTitleAlign: "center",
+              headerShadowVisible: false,
+              headerTitle: () => <Header />,
+              headerTintColor: "#ffffff",
+            }}
+          >
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Lend" component={LendScreen} />
+            <Stack.Screen name="Borrow" component={BorrowScreen} />
+            <Stack.Screen name="Offers" component={OffersScreen} />
+            <Stack.Screen name="Loans" component={LoansScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </RecoilRoot>
+    </ApolloProvider>
   )
 }
 
