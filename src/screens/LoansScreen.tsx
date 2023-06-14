@@ -5,7 +5,7 @@ import { Search, Screen, Footer, LoanRow } from "../components"
 import Fonts from "../utils/Fonts"
 
 const TableHeader = () => (
-  <View style={tw`flex w-[84%] flex-row justify-around items-center mt-3`}>
+  <View style={tw`flex w-[80%] flex-row justify-around items-center mt-3`}>
     <View style={tw`flex flex-1 justify-center`} />
     <View style={tw`flex flex-1 justify-center`}>
       <Text style={{ ...tw`text-[12px] text-[#666666] text-center`, fontFamily: Fonts.PoppinsRegular }}>Amount Due</Text>
@@ -27,7 +27,7 @@ const TableHeader = () => (
 
 export function LoansScreen({ navigation }: any) {
   const [text, onChangeText] = useState("")
-  const [lendModalVisible, setLendModalVisible] = useState(false)
+  const [repayModalVisible, setRepayModalVisible] = useState(false)
 
   return (
     <Screen style={tw`flex bg-black`}>

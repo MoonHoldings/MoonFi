@@ -17,7 +17,7 @@ export const LoanRow = () => (
       <TouchableOpacity style={tw`border border-2 border-[#63ECD2] rounded-lg items-center py-[8px] px-4 w-auto`} onPress={() => console.log("asd")}>
         <Text
           style={{
-            ...tw`text-[#63ECD2] text-[11px]`,
+            ...tw`text-[#63ECD2] text-[12px]`,
             fontFamily: Fonts.InterRegular,
           }}
         >
@@ -29,7 +29,7 @@ export const LoanRow = () => (
       <TouchableOpacity style={tw`border border-2 border-[#63ECD2] rounded-lg items-center py-[8px] px-4 w-auto`} onPress={() => console.log("asd")}>
         <Text
           style={{
-            ...tw`text-[#63ECD2] text-[11px]`,
+            ...tw`text-[#63ECD2] text-[12px]`,
             fontFamily: Fonts.InterRegular,
           }}
         >

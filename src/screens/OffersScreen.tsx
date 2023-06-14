@@ -3,9 +3,10 @@ import { FlatList, View, Text, Image } from "react-native"
 import tw from "twrnc"
 import { Search, Screen, Footer, OfferRow } from "../components"
 import Fonts from "../utils/Fonts"
+import { ViewLoanModal } from "../modals"
 
 const TableHeader = () => (
-  <View style={tw`flex w-[92%] flex-row justify-around items-center mt-4`}>
+  <View style={tw`flex w-[89%] flex-row justify-around items-center mt-4`}>
     <View style={tw`flex flex-1 justify-center`} />
     <View style={tw`flex flex-1 justify-center`}>
       <Text style={{ ...tw`text-[12px] text-[#666666] text-center`, fontFamily: Fonts.PoppinsRegular }}>Offer</Text>
@@ -32,10 +33,11 @@ const TableHeader = () => (
 
 export function OffersScreen({ navigation }: any) {
   const [text, onChangeText] = useState("")
-  const [lendModalVisible, setLendModalVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
 
   return (
     <Screen style={tw`flex bg-black`}>
+      <ViewLoanModal visible={modalVisible} onClose={() => setModalVisible(false)} />
       <View style={tw`flex flex-col rounded-lg bg-[#1F2126] w-full justify-center mb-4 py-3 px-5`}>
         <View style={tw`flex flex-row w-full`}>
           <View style={tw`flex flex-1 items-start`}>
@@ -65,7 +67,7 @@ export function OffersScreen({ navigation }: any) {
       </View>
       <Search value={text} onChangeText={onChangeText} loading={false} />
       <TableHeader />
-      <FlatList showsVerticalScrollIndicator={false} data={[1, 2, 3, 2, 3, 2, 3, 2, 3]} renderItem={({ item }) => <OfferRow actionLabel="View" onActionPress={null} />} />
+      <FlatList showsVerticalScrollIndicator={false} data={[1, 2, 3, 2, 3, 2, 3, 2, 3]} renderItem={({ item }) => <OfferRow actionLabel="View" onActionPress={() => setModalVisible(true)} />} />
       <Footer navigation={navigation} activeScreen={"Offers"} />
     </Screen>
   )

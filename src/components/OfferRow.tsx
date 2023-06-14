@@ -30,7 +30,7 @@ export const OfferRow = ({ actionLabel, onActionPress, actionButtonColor }: any)
       <TouchableOpacity style={tw`border border-2 border-[${actionButtonColor ?? "#63ECD2"}] rounded-lg items-center py-[8px] px-4 w-auto`} onPress={onActionPress}>
         <Text
           style={{
-            ...tw`text-[${actionButtonColor ?? "#63ECD2"}] text-[11px]`,
+            ...tw`text-[${actionButtonColor ?? "#63ECD2"}] text-[12px]`,
             fontFamily: Fonts.InterRegular,
           }}
         >

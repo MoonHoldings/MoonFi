@@ -3,7 +3,7 @@ import { FlatList, View, Text } from "react-native"
 import tw from "twrnc"
 import { Search, Screen, Footer, OrderBookRow } from "../components"
 import Fonts from "../utils/Fonts"
-import { BorrowModal } from "../modals/BorrowModal"
+import { BorrowModal } from "../modals"
 
 const DataHeader = () => (
   <View style={tw`flex w-full flex-row justify-around items-center mt-4 pr-[32px]`}>
