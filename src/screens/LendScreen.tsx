@@ -1,11 +1,10 @@
-import { useState, useCallback, useEffect } from "react"
-import { FlatList, View, Text, ActivityIndicator, RefreshControl } from "react-native"
+import { useState, useCallback, useEffect, useRef } from "react"
+import { FlatList, View, Text, ActivityIndicator, RefreshControl, TouchableOpacity, Image } from "react-native"
 import { useFocusEffect } from "@react-navigation/native"
 import tw from "twrnc"
 import { Search, Screen, Footer, OrderBookRow } from "../components"
 import Fonts from "../utils/Fonts"
 import { LendModal } from "../modals/LendModal"
-import { usePublicKeys } from "../hooks/xnft-hooks"
 import { GET_ORDER_BOOKS } from "../utils/queries"
 import { useLazyQuery } from "@apollo/client"
 
@@ -35,40 +34,108 @@ const DataHeader = () => (
   </View>
 )
 
-export function LendScreen({ navigation }: any) {
-  const [text, onChangeText] = useState("")
-  const [lendModalVisible, setLendModalVisible] = useState(false)
+const LIMIT = 50
+const SCROLL_TO_TOP_THRESHOLD = 300
 
-  const [getOrderBooks, { loading, data }] = useLazyQuery(GET_ORDER_BOOKS, {
+export function LendScreen({ navigation }: any) {
+  const [search, setSearch] = useState<string>("")
+  const [lendModalVisible, setLendModalVisible] = useState<boolean>(false)
+  const [offset, setOffset] = useState<number>(0)
+  const [showScrollToTop, setShowScrollToTop] = useState<boolean>(false)
+  const flatListRef: any = useRef(null)
+
+  const [getOrderBooks, { data, loading }] = useLazyQuery(GET_ORDER_BOOKS, {
     fetchPolicy: "no-cache",
   })
+  const [fetchedOrderBooks, setFetchedOrderBooks] = useState<any[]>([])
 
   useFocusEffect(
     useCallback(() => {
-      getOrderBooks()
-      console.log("fetch")
+      fetchOrderBooks()
     }, [])
   )
 
   useEffect(() => {
-    console.log("data", data)
-  }, [data])
+    if (search.length > 2) {
+      fetchOrderBooks(true)
+    } else if (search.length === 0) {
+      fetchOrderBooks(true)
+    }
+  }, [search])
+
+  const fetchOrderBooks = async (isSearch = false) => {
+    const { data } = await getOrderBooks({
+      variables: {
+        args: {
+          filter: {
+            search,
+          },
+          pagination: {
+            limit: LIMIT,
+            offset: isSearch ? 0 : offset,
+          },
+        },
+      },
+    })
+    const orderBooks = data?.getOrderBooks?.data
+
+    if (orderBooks && !isSearch) {
+      setFetchedOrderBooks([...fetchedOrderBooks, ...orderBooks])
+      setOffset((prevOffset) => prevOffset + LIMIT)
+    } else if (orderBooks) {
+      setFetchedOrderBooks(orderBooks)
+    }
+  }
 
   return (
     <Screen style={tw`flex bg-black`}>
       <LendModal visible={lendModalVisible} onClose={() => setLendModalVisible(false)} />
-      <Search value={text} onChangeText={onChangeText} loading={false} />
+      <Search value={search} onChangeText={(text: string) => setSearch(text)} loading={false} />
       <DataHeader />
       <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}>
-        {loading ? (
+        {loading && !fetchedOrderBooks.length ? (
           <ActivityIndicator size={25} color="#63ECD2" />
         ) : (
           <FlatList
+            ref={flatListRef}
             refreshControl={<RefreshControl refreshing={true} />}
             showsVerticalScrollIndicator={false}
-            data={data?.getOrderBooks?.data}
+            data={fetchedOrderBooks}
+            keyExtractor={(item) => "orderbook_" + item.id}
             renderItem={({ item }) => <OrderBookRow orderBook={item} actionLabel="Lend" onActionPress={() => setLendModalVisible(true)} />}
+            onEndReached={() => {
+              if (!loading && data?.getOrderBooks?.data?.length) {
+                fetchOrderBooks()
+              }
+            }}
+            onScroll={(event) => {
+              if (event.nativeEvent.contentOffset.y > SCROLL_TO_TOP_THRESHOLD) {
+                setShowScrollToTop(true)
+              } else {
+                setShowScrollToTop(false)
+              }
+            }}
+            scrollsToTop={false}
           />
+        )}
+        {!fetchedOrderBooks.length && !loading && (
+          <View style={tw`w-full flex items-center justify-center`}>
+            <Text style={{ ...tw`text-white text-[15px]` }}>No data</Text>
+          </View>
+        )}
+      </View>
+      <View style={tw`flex items-center w-full`}>
+        {(loading as any) && fetchedOrderBooks.length ? (
+          <ActivityIndicator size={22} color="#63ECD2" />
+        ) : (
+          showScrollToTop && (
+            <TouchableOpacity
+              style={tw`text-white flex justify-center items-center bg-black rounded-full p-1 border-2 border-[#63ECD2]`}
+              onPress={() => flatListRef?.current?.scrollToIndex({ index: 0 })}
+            >
+              <Image source={require("/assets/arrow-up.png")} style={tw`w-4 h-4`} />
+            </TouchableOpacity>
+          )
         )}
       </View>
       <Footer navigation={navigation} activeScreen={"Lend"} />

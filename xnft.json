@@ -1,17 +1,15 @@
 {
-  "name": "xNFT Quickstart",
+  "name": "MoonFi",
   "version": "0.0.1",
-  "storage": "",
-  "description": "React Native Example",
-  "website": "http://wao.gg",
+  "storage": "aws",
+  "description": "MoonHoldings x Sharkify",
+  "website": "https://www.moonholdings.xyz/",
   "kind": "app",
   "icon": {
-    "md": "./assets/icon.png"
+    "md": "./assets/icon.svg"
   },
-  "contact": "",
-  "screenshots": [
-    "./assets/screenShot.png"
-  ],
+  "contact": "test@gmail.com",
+  "screenshots": ["./assets/screenShot.png"],
   "entrypoints": {
     "default": {
       "web": "./web-build/index.html"
