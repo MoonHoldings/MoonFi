@@ -2,11 +2,12 @@ import { useState, useCallback, useEffect, useRef } from "react"
 import { FlatList, View, Text, ActivityIndicator, RefreshControl, TouchableOpacity, Image } from "react-native"
 import { useFocusEffect } from "@react-navigation/native"
 import tw from "twrnc"
+import { useLazyQuery } from "@apollo/client"
+
 import { Search, Screen, Footer, OrderBookRow } from "../components"
-import Fonts from "../utils/Fonts"
 import { LendModal } from "../modals/LendModal"
 import { GET_ORDER_BOOKS } from "../utils/queries"
-import { useLazyQuery } from "@apollo/client"
+import Fonts from "../utils/Fonts"
 
 const DataHeader = () => (
   <View style={tw`flex w-full flex-row justify-around items-center mt-4 pr-[20px]`}>
@@ -34,7 +35,7 @@ const DataHeader = () => (
   </View>
 )
 
-const LIMIT = 50
+const LIMIT = 30
 const SCROLL_TO_TOP_THRESHOLD = 300
 
 export function LendScreen({ navigation }: any) {
@@ -43,6 +44,7 @@ export function LendScreen({ navigation }: any) {
   const [offset, setOffset] = useState<number>(0)
   const [showScrollToTop, setShowScrollToTop] = useState<boolean>(false)
   const flatListRef: any = useRef(null)
+  const [selectedOrderBook, setSelectedOrderBook] = useState(null)
 
   const [getOrderBooks, { data, loading }] = useLazyQuery(GET_ORDER_BOOKS, {
     fetchPolicy: "no-cache",
@@ -89,7 +91,7 @@ export function LendScreen({ navigation }: any) {
 
   return (
     <Screen style={tw`flex bg-black`}>
-      <LendModal visible={lendModalVisible} onClose={() => setLendModalVisible(false)} />
+      <LendModal visible={lendModalVisible} onClose={() => setLendModalVisible(false)} orderBook={selectedOrderBook} />
       <Search value={search} onChangeText={(text: string) => setSearch(text)} loading={false} />
       <DataHeader />
       <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}>
@@ -102,7 +104,16 @@ export function LendScreen({ navigation }: any) {
             showsVerticalScrollIndicator={false}
             data={fetchedOrderBooks}
             keyExtractor={(item) => "orderbook_" + item.id}
-            renderItem={({ item }) => <OrderBookRow orderBook={item} actionLabel="Lend" onActionPress={() => setLendModalVisible(true)} />}
+            renderItem={({ item }) => (
+              <OrderBookRow
+                orderBook={item}
+                actionLabel="Lend"
+                onActionPress={() => {
+                  setSelectedOrderBook(item)
+                  setLendModalVisible(true)
+                }}
+              />
+            )}
             onEndReached={() => {
               if (!loading && data?.getOrderBooks?.data?.length) {
                 fetchOrderBooks()
