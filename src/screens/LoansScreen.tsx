@@ -1,8 +1,8 @@
-import { useState } from "react"
-import { FlatList, View, Text, Image } from "react-native"
-import tw from "twrnc"
-import { Search, Screen, Footer, LoanRow } from "../components"
-import Fonts from "../utils/Fonts"
+import { useState } from 'react'
+import { FlatList, View, Text, Image } from 'react-native'
+import tw from 'twrnc'
+import { Search, Screen, Footer, LoanRow } from '../components'
+import Fonts from '../utils/Fonts'
 
 const TableHeader = () => (
   <View style={tw`flex w-[80%] flex-row justify-around items-center mt-3`}>
@@ -26,7 +26,7 @@ const TableHeader = () => (
 )
 
 export function LoansScreen({ navigation }: any) {
-  const [text, onChangeText] = useState("")
+  const [text, onChangeText] = useState('')
   const [repayModalVisible, setRepayModalVisible] = useState(false)
 
   return (
@@ -48,11 +48,11 @@ export function LoansScreen({ navigation }: any) {
             <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>1</Text>
           </View>
           <View style={tw`flex flex-row flex-1 justify-center items-center`}>
-            <Image source={require("/assets/sol.svg")} style={tw`w-4 h-4 mr-[4px]`} />
+            <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
             <Text style={{ ...tw`text-white text-center text-[16px]`, fontFamily: Fonts.PoppinsLight }}>1.20</Text>
           </View>
           <View style={tw`flex flex-row flex-1 justify-end items-center`}>
-            <Image source={require("/assets/sol.svg")} style={tw`w-4 h-4 mr-[4px]`} />
+            <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
             <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>5.60</Text>
           </View>
         </View>
@@ -60,7 +60,7 @@ export function LoansScreen({ navigation }: any) {
       <Search value={text} onChangeText={onChangeText} loading={false} />
       <TableHeader />
       <FlatList showsVerticalScrollIndicator={false} data={[1, 2, 3, 2, 3, 2, 3, 2, 3]} renderItem={({ item }) => <LoanRow />} />
-      <Footer navigation={navigation} activeScreen={"Loans"} />
+      <Footer navigation={navigation} activeScreen={'Loans'} />
     </Screen>
   )
 }

@@ -1,9 +1,9 @@
-import { useState } from "react"
-import { FlatList, View, Text, Image } from "react-native"
-import tw from "twrnc"
-import { Search, Screen, Footer, OfferRow } from "../components"
-import Fonts from "../utils/Fonts"
-import { ViewLoanModal } from "../modals"
+import { useState } from 'react'
+import { FlatList, View, Text, Image } from 'react-native'
+import tw from 'twrnc'
+import { Search, Screen, Footer, OfferRow } from '../components'
+import Fonts from '../utils/Fonts'
+import { ViewLoanModal } from '../modals'
 
 const TableHeader = () => (
   <View style={tw`flex w-[89%] flex-row justify-around items-center mt-4`}>
@@ -32,7 +32,7 @@ const TableHeader = () => (
 )
 
 export function OffersScreen({ navigation }: any) {
-  const [text, onChangeText] = useState("")
+  const [text, onChangeText] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
 
   return (
@@ -52,15 +52,15 @@ export function OffersScreen({ navigation }: any) {
         </View>
         <View style={tw`flex flex-row w-full mt-1`}>
           <View style={tw`flex flex-row flex-1 justify-start items-center`}>
-            <Image source={require("/assets/sol.svg")} style={tw`w-4 h-4 mr-[4px]`} />
+            <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
             <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>10.02</Text>
           </View>
           <View style={tw`flex flex-row flex-1 justify-center items-center`}>
-            <Image source={require("/assets/sol.svg")} style={tw`w-4 h-4 mr-[4px]`} />
+            <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
             <Text style={{ ...tw`text-white text-center text-[16px]`, fontFamily: Fonts.PoppinsLight }}>1.20</Text>
           </View>
           <View style={tw`flex flex-row flex-1 justify-end items-center`}>
-            <Image source={require("/assets/sol.svg")} style={tw`w-4 h-4 mr-[4px]`} />
+            <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
             <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>5.60</Text>
           </View>
         </View>
@@ -68,7 +68,7 @@ export function OffersScreen({ navigation }: any) {
       <Search value={text} onChangeText={onChangeText} loading={false} />
       <TableHeader />
       <FlatList showsVerticalScrollIndicator={false} data={[1, 2, 3, 2, 3, 2, 3, 2, 3]} renderItem={({ item }) => <OfferRow actionLabel="View" onActionPress={() => setModalVisible(true)} />} />
-      <Footer navigation={navigation} activeScreen={"Offers"} />
+      <Footer navigation={navigation} activeScreen={'Offers'} />
     </Screen>
   )
 }

@@ -1,11 +1,11 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client"
-import { setContext } from "@apollo/client/link/context"
-import { GRAPHQL_URL, SUPERUSER_KEY } from "@env"
-import encrypt from "./encrypt"
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
+import { GRAPHQL_URL, SUPERUSER_KEY } from '@env'
+import encrypt from './encrypt'
 
 const httpLink = createHttpLink({
   uri: GRAPHQL_URL,
-  credentials: "include",
+  credentials: 'include',
 })
 
 const authLink = setContext((_, { headers }) => {
@@ -14,7 +14,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: encryptedKey ? `Bearer ${encryptedKey}` : "",
+      authorization: encryptedKey ? `Bearer ${encryptedKey}` : '',
     },
   }
 })

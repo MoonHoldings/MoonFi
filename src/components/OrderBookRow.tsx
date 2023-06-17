@@ -1,13 +1,13 @@
-import { View, TouchableOpacity, Text, Image } from "react-native"
-import Fonts from "../utils/Fonts"
-import tw from "twrnc"
-import toCurrencyFormat from "../utils/toCurrencyFormat"
+import { View, TouchableOpacity, Text, Image } from 'react-native'
+import Fonts from '../utils/Fonts'
+import tw from 'twrnc'
+import toCurrencyFormat from '../utils/toCurrencyFormat'
 
 export const OrderBookRow = ({ actionLabel, onActionPress, orderBook }: any) => {
   if (!orderBook) return null
 
   const { bestOffer, collectionImage, totalPool, floorPriceSol, duration } = orderBook
-  const defaultImage = "https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FMoonHolders.10dd0302.jpg&w=128&q=75"
+  const defaultImage = 'https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FMoonHolders.10dd0302.jpg&w=128&q=75'
 
   return (
     <View style={tw`flex flex-row justify-between items-center py-3 border-b border-[#ffffff33] px-3`}>

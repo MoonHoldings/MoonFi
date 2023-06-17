@@ -1,8 +1,8 @@
-import { Text, View, TouchableOpacity } from "react-native"
-import tw from "twrnc"
-import { Screen } from "../components/Screen"
-import Fonts from "../utils/Fonts"
-import { Footer } from "../components"
+import { Text, View, TouchableOpacity } from 'react-native'
+import tw from 'twrnc'
+import { Screen } from '../components/Screen'
+import Fonts from '../utils/Fonts'
+import { Footer } from '../components'
 
 export function HomeScreen({ navigation }: any) {
   return (
@@ -15,7 +15,7 @@ export function HomeScreen({ navigation }: any) {
               fontFamily: Fonts.PoppinsBold,
             }}
           >
-            Lend and borrow{"\n"} on your NFTs
+            Lend and borrow{'\n'} on your NFTs
           </Text>
           <Text
             style={{
@@ -29,7 +29,7 @@ export function HomeScreen({ navigation }: any) {
         <View style={tw`flex w-full`}>
           <View style={tw`flex flex-row items-center justify-around w-full`}>
             <View style={tw`flex flex-row justify-center items-center`}>
-              <TouchableOpacity onPress={() => navigation.navigate("Lend")}>
+              <TouchableOpacity onPress={() => navigation.navigate('Lend')}>
                 <Text
                   style={{
                     ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -45,10 +45,10 @@ export function HomeScreen({ navigation }: any) {
                   fontFamily: Fonts.InterSemiBold,
                 }}
               >
-                {" "}
-                or{" "}
+                {' '}
+                or{' '}
               </Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Borrow")}>
+              <TouchableOpacity onPress={() => navigation.navigate('Borrow')}>
                 <Text
                   style={{
                     ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -71,7 +71,7 @@ export function HomeScreen({ navigation }: any) {
                 </Text>
               </View>
               <View style={tw`flex flex-row justify-center`}>
-                <TouchableOpacity onPress={() => navigation.navigate("Offers")}>
+                <TouchableOpacity onPress={() => navigation.navigate('Offers')}>
                   <Text
                     style={{
                       ...tw`text-[16px] text-[#63ECD2] underline`,
@@ -87,10 +87,10 @@ export function HomeScreen({ navigation }: any) {
                     fontFamily: Fonts.InterSemiBold,
                   }}
                 >
-                  {" "}
-                  or{" "}
+                  {' '}
+                  or{' '}
                 </Text>
-                <TouchableOpacity onPress={() => navigation.navigate("Loans")}>
+                <TouchableOpacity onPress={() => navigation.navigate('Loans')}>
                   <Text
                     style={{
                       ...tw`text-[16px] text-[#63ECD2] underline`,

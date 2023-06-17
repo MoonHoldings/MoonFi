@@ -1,9 +1,9 @@
-import { useState } from "react"
-import { FlatList, View, Text } from "react-native"
-import tw from "twrnc"
-import { Search, Screen, Footer, OrderBookRow } from "../components"
-import Fonts from "../utils/Fonts"
-import { BorrowModal } from "../modals"
+import { useState } from 'react'
+import { FlatList, View, Text } from 'react-native'
+import tw from 'twrnc'
+import { Search, Screen, Footer, OrderBookRow } from '../components'
+import Fonts from '../utils/Fonts'
+import { BorrowModal } from '../modals'
 
 const DataHeader = () => (
   <View style={tw`flex w-full flex-row justify-around items-center mt-4 pr-[32px]`}>
@@ -18,7 +18,7 @@ const DataHeader = () => (
           fontFamily: Fonts.PoppinsRegular,
         }}
       >
-        {"Best" + "\n" + "Offer"}
+        {'Best' + '\n' + 'Offer'}
       </Text>
     </View>
     <View style={tw`flex flex-1 justify-center`}>
@@ -32,7 +32,7 @@ const DataHeader = () => (
 )
 
 export function BorrowScreen({ navigation }: any) {
-  const [text, onChangeText] = useState("")
+  const [text, onChangeText] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
 
   return (
@@ -41,7 +41,7 @@ export function BorrowScreen({ navigation }: any) {
       <Search value={text} onChangeText={onChangeText} loading={false} />
       <DataHeader />
       <FlatList showsVerticalScrollIndicator={false} data={[1, 2, 3, 2, 3, 2, 3, 2, 3]} renderItem={({ item }) => <OrderBookRow actionLabel="Borrow" onActionPress={() => setModalVisible(true)} />} />
-      <Footer navigation={navigation} activeScreen={"Borrow"} />
+      <Footer navigation={navigation} activeScreen={'Borrow'} />
     </Screen>
   )
 }
