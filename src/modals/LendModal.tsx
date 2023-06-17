@@ -49,6 +49,7 @@ export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; o
     control,
     handleSubmit,
     watch,
+    reset,
   } = methods
 
   const floorPriceSol = orderBook?.floorPriceSol
@@ -57,6 +58,14 @@ export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; o
   useEffect(() => {
     if (publicKeys?.solana && visible) {
       getBalance()
+    }
+
+    if (!visible) {
+      setOfferCount(1)
+      setTxLink(null)
+      setIsSuccess(false)
+      setFailMessage(null)
+      reset()
     }
   }, [publicKeys, visible])
 
@@ -176,7 +185,7 @@ export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; o
   }
 
   return (
-    <Modal animationType="fade" visible={visible} onRequestClose={onClose}>
+    <Modal animationType="fade" visible={visible}>
       <HeaderBar />
       <Screen style={tw`flex bg-black p-[16px]`}>
         <ScrollView style={tw`flex flex-1 bg-[${isSuccess ? '#022628' : '#1F2126'}] rounded-md p-[16px]`} showsVerticalScrollIndicator={false}>
