@@ -1,10 +1,16 @@
-import { Modal, View, Image, TouchableOpacity, Text, TextInput, Platform, ScrollView } from "react-native"
+import { Modal, View, Image, TouchableOpacity, Text, TextInput, Platform, ScrollView, ActivityIndicator } from "react-native"
 import { Controller, useForm } from "react-hook-form"
 import tw from "twrnc"
+import { createSharkyClient } from "@sharkyfi/client"
 import { Header, Screen } from "../components"
 import Fonts from "../utils/Fonts"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import toCurrencyFormat from "../utils/toCurrencyFormat"
+import calculateLendInterest from "../utils/calculateLendInterest"
+import { usePublicKeys, useSolanaProvider } from "../hooks/xnft-hooks"
+import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js"
+import createAnchorProvider, { connection } from "../utils/createAnchorProvider"
+import { AnchorProvider } from "@coral-xyz/anchor"
 
 const MAX_OFFERS = 4
 
@@ -18,6 +24,10 @@ const HeaderBar = () => {
 
 export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; onClose?: any; orderBook: any }) => {
   const [offerCount, setOfferCount] = useState(1)
+  const [balance, setBalance] = useState<number | null>(null)
+  // const provider = useSolanaProvider()
+
+  const publicKeys = usePublicKeys()
 
   const methods = useForm({
     defaultValues: {
@@ -30,10 +40,29 @@ export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; o
     formState: { errors, isSubmitting },
     control,
     handleSubmit,
+    watch,
+    setError,
   } = methods
 
   const floorPriceSol = orderBook?.floorPriceSol
   const defaultImage = "https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FMoonHolders.10dd0302.jpg&w=128&q=75"
+
+  useEffect(() => {
+    if (publicKeys?.solana && visible) {
+      getBalance()
+    }
+  }, [publicKeys, visible])
+
+  const getBalance = async () => {
+    if (!publicKeys?.solana) return
+
+    try {
+      const balance = await connection.getBalance(new PublicKey(publicKeys?.solana))
+      setBalance(balance / LAMPORTS_PER_SOL)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const renderCloseButton = () => {
     return (
@@ -59,6 +88,35 @@ export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; o
     }
 
     return selectors
+  }
+
+  const onSubmit = async (data: any) => {
+    if (data?.offerAmount) {
+      // if (balance && data?.offerAmount * offerCount > balance) {
+      //   setError("offerAmount", {
+      //     message: "Not enough balance.",
+      //     type: "max",
+      //   })
+      //   return
+      // }
+      const provider = createAnchorProvider()
+
+      try {
+        const sharkyClient = createSharkyClient(provider as AnchorProvider)
+        const { program } = sharkyClient
+
+        console.log(program)
+
+        const { orderBook: orderBookInfo } = await sharkyClient.fetchOrderBook({
+          program,
+          orderBookPubKey: orderBook.pubKey,
+        })
+
+        console.log(orderBook)
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
 
   return (
@@ -112,7 +170,7 @@ export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; o
                       message: "Please input an offer amount not less than 0.01.",
                     },
                     max: {
-                      value: 100,
+                      value: (balance as any) / offerCount,
                       message: `Not enough balance.`,
                     },
                   }}
@@ -147,11 +205,13 @@ export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; o
               <View style={tw`flex items-center px-3 flex-row rounded-lg bg-[#0C0D0F] w-full mt-2`}>
                 <Image source={require("/assets/sol.svg")} style={tw`w-4 h-4 mr-[8px]`} />
                 <TextInput
+                  editable={false}
                   style={{
                     ...tw`rounded-lg w-full items-center text-white h-full text-[13px] py-[15px] bg-[#0C0D0F]`,
                     ...Platform.select({ web: { outline: "none" } }),
                     fontFamily: Fonts.InterSemiBold,
                   }}
+                  value={calculateLendInterest(parseFloat(watch("offerAmount")), orderBook?.duration, orderBook?.apy, orderBook?.feePermillicentage) as any}
                 />
               </View>
             </View>
@@ -160,7 +220,7 @@ export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; o
           <View style={tw`flex flex-row w-full`}>
             <Text style={{ ...tw`text-[#747E92] text-[11px]`, fontFamily: Fonts.InterRegular }}>Best Offer:</Text>
             <Image source={require("/assets/sol.svg")} style={tw`w-3 h-3 mx-[4px]`} />
-            <Text style={{ ...tw`text-[#747E92] text-[11px]`, fontFamily: Fonts.InterRegular }}>2.20</Text>
+            <Text style={{ ...tw`text-[#747E92] text-[11px]`, fontFamily: Fonts.InterRegular }}>{toCurrencyFormat(orderBook?.bestOffer)}</Text>
           </View>
           <View style={tw`flex flex-row w-full justify-between items-center mt-3`}>
             <Text style={{ ...tw`text-white text-[11px]`, fontFamily: Fonts.InterRegular }}>Number of Offers</Text>
@@ -171,18 +231,18 @@ export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; o
             <Text style={{ ...tw`text-white text-[11px]`, fontFamily: Fonts.InterSemiBold }}>Total</Text>
             <View style={tw`flex flex-row items-center`}>
               <Image source={require("/assets/sol.svg")} style={tw`w-3 h-3 mx-[4px]`} />
-              <Text style={{ ...tw`text-white text-[11px]`, fontFamily: Fonts.InterSemiBold }}>0</Text>
+              <Text style={{ ...tw`text-white text-[11px]`, fontFamily: Fonts.InterSemiBold }}>{toCurrencyFormat(parseFloat(watch("offerAmount")) * offerCount)}</Text>
             </View>
           </View>
           <View style={tw`flex flex-row w-full items-center justify-between mt-2`}>
             <Text style={{ ...tw`text-[#747E92] text-[11px]`, fontFamily: Fonts.InterSemiBold }}>Balance</Text>
             <View style={tw`flex flex-row items-center`}>
               <Image source={require("/assets/sol.svg")} style={tw`w-3 h-3 mx-[4px]`} />
-              <Text style={{ ...tw`text-[#747E92] text-[11px]`, fontFamily: Fonts.InterSemiBold }}>0</Text>
+              <Text style={{ ...tw`text-[#747E92] text-[11px]`, fontFamily: Fonts.InterSemiBold }}>{toCurrencyFormat(balance)}</Text>
             </View>
           </View>
           <View style={tw`flex w-full justify-center items-center mt-2`}>
-            <TouchableOpacity style={tw`border border-2 border-[#63ECD2] rounded-md items-center py-3 px-8 bg-[#63ECD2]`} onPress={handleSubmit((data) => console.log(data))}>
+            <TouchableOpacity style={tw`flex flex-row justify-center border border-2 border-[#63ECD2] rounded-md items-center py-3 px-8 bg-[#63ECD2]`} onPress={handleSubmit(onSubmit)}>
               <Text
                 style={{
                   ...tw`text-black text-[14px]`,
@@ -191,6 +251,7 @@ export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; o
               >
                 Place Offer
               </Text>
+              {isSubmitting && <ActivityIndicator color="black" size={18} style={tw`ml-2`} />}
             </TouchableOpacity>
           </View>
           <View style={tw`flex w-full justify-center items-center mt-3`}>
