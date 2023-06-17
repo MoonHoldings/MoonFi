@@ -427,22 +427,14 @@ export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; o
           </View>
           {txLink && (
             <View style={tw`flex w-full justify-center items-center mt-2`}>
-              (
-              <div className="flex w-full justify-center">
-                <Text style={tw`mt-2 text-[11px] text-white underline`} onPress={() => Linking.openURL(txLink as string)}>
-                  View your last transaction on Solana FM
-                </Text>
-              </div>
-              )
+              <Text style={tw`mt-2 text-[11px] text-white underline`} onPress={() => Linking.openURL(txLink as string)}>
+                View your last transaction on Solana FM
+              </Text>
             </View>
           )}
           {failMessage && (
             <View style={tw`flex w-full justify-center items-center mt-2`}>
-              (
-              <div className="flex w-full justify-center">
-                <Text style={tw`mt-2 text-[11px] text-red-500`}>{failMessage}</Text>
-              </div>
-              )
+              <Text style={tw`mt-2 text-[11px] text-red-500`}>{failMessage}</Text>
             </View>
           )}
           <View style={tw`flex w-full justify-center items-center mt-3`}>
