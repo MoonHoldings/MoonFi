@@ -11,7 +11,7 @@ const HeaderBar = () => {
   )
 }
 
-export const BorrowModal = ({ visible, onClose }: { visible: boolean; onClose?: any }) => {
+export const BorrowModal = ({ visible, onClose, orderBook }: { visible: boolean; onClose?: any; orderBook: any }) => {
   const renderCloseButton = () => {
     return (
       <TouchableOpacity onPress={onClose}>

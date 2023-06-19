@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { FlatList, View, Text, ActivityIndicator, RefreshControl, TouchableOpacity, Image } from 'react-native'
-import { useFocusEffect } from '@react-navigation/native'
+import { useFocusEffect, useIsFocused } from '@react-navigation/native'
 import tw from 'twrnc'
 import { useLazyQuery } from '@apollo/client'
 
@@ -66,17 +66,20 @@ export function LendScreen({ navigation }: any) {
   const [showScrollToTop, setShowScrollToTop] = useState<boolean>(false)
   const flatListRef: any = useRef(null)
   const [selectedOrderBook, setSelectedOrderBook] = useState(null)
+  const isFocused = useIsFocused()
 
   const [getOrderBooks, { data, loading }] = useLazyQuery(GET_ORDER_BOOKS, {
     fetchPolicy: 'no-cache',
   })
   const [fetchedOrderBooks, setFetchedOrderBooks] = useState<any[]>([])
 
-  useFocusEffect(
-    useCallback(() => {
+  useEffect(() => {
+    if (isFocused) {
       fetchOrderBooks()
-    }, [])
-  )
+    } else {
+      setSearch('')
+    }
+  }, [isFocused])
 
   useEffect(() => {
     if (search.length > 2) {

@@ -3,7 +3,7 @@ import Fonts from '../utils/Fonts'
 import tw from 'twrnc'
 import toCurrencyFormat from '../utils/toCurrencyFormat'
 
-export const OrderBookRow = ({ actionLabel, onActionPress, orderBook }: any) => {
+export const OrderBookRow = ({ actionLabel, onActionPress, orderBook, disabled }: any) => {
   if (!orderBook) return null
 
   const { bestOffer, collectionImage, totalPool, floorPriceSol, duration } = orderBook
@@ -34,7 +34,7 @@ export const OrderBookRow = ({ actionLabel, onActionPress, orderBook }: any) => 
         <Text style={{ ...tw`text-[12px] text-white text-center`, fontFamily: Fonts.PoppinsLight }}>{Math.floor(duration / 86400)}d</Text>
       </View>
       <View style={tw`flex min-w-[15%] justify-center`}>
-        <TouchableOpacity style={tw`border border-2 border-[#63ECD2] rounded-lg items-center py-[8px] px-4 w-auto`} onPress={onActionPress}>
+        <TouchableOpacity style={{ ...tw`border border-2 border-[#63ECD2] rounded-lg items-center py-[8px] px-4 w-auto`, opacity: disabled ? 0.5 : 1 }} onPress={onActionPress} disabled={disabled}>
           <Text
             style={{
               ...tw`text-[#63ECD2] text-[12px]`,
