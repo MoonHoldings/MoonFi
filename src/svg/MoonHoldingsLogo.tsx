@@ -1,5 +1,5 @@
-import * as React from "react";
-import Svg, { SvgProps, Path } from "react-native-svg";
+import * as React from 'react'
+import Svg, { SvgProps, Path } from 'react-native-svg'
 
 export const MoonHoldingsLogo = (props: SvgProps) => (
   <Svg width={38} height={32} fill="none" {...props}>
@@ -24,4 +24,4 @@ export const MoonHoldingsLogo = (props: SvgProps) => (
       d="M16.3 27.173a.488.488 0 0 0-.145.307c0 .09.064.235.145.308.117.126.497.144 2.703.144s2.585-.018 2.703-.144a.488.488 0 0 0 .144-.308.488.488 0 0 0-.144-.307c-.118-.127-.497-.145-2.703-.145s-2.585.018-2.703.145Z"
     />
   </Svg>
-);
+)

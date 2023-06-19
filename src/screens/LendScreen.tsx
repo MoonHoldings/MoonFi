@@ -1,19 +1,26 @@
-import { useState, useCallback, useEffect, useRef } from "react"
-import { FlatList, View, Text, ActivityIndicator, RefreshControl, TouchableOpacity, Image } from "react-native"
-import { useFocusEffect } from "@react-navigation/native"
-import tw from "twrnc"
-import { useLazyQuery } from "@apollo/client"
+import { useState, useCallback, useEffect, useRef } from 'react'
+import { FlatList, View, Text, ActivityIndicator, RefreshControl, TouchableOpacity, Image } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
+import tw from 'twrnc'
+import { useLazyQuery } from '@apollo/client'
 
-import { Search, Screen, Footer, OrderBookRow } from "../components"
-import { LendModal } from "../modals/LendModal"
-import { GET_ORDER_BOOKS } from "../utils/queries"
-import Fonts from "../utils/Fonts"
+import { Search, Screen, Footer, OrderBookRow } from '../components'
+import { LendModal } from '../modals/LendModal'
+import { GET_ORDER_BOOKS } from '../utils/queries'
+import Fonts from '../utils/Fonts'
 
 const DataHeader = () => (
   <View style={tw`flex w-full flex-row justify-around items-center mt-4 pr-[20px]`}>
     <View style={tw`flex flex-1 justify-center`} />
     <View style={tw`flex flex-1 justify-center`}>
-      <Text style={{ ...tw`text-[12px] text-[#666666] text-center`, fontFamily: Fonts.PoppinsRegular }}>Pool</Text>
+      <Text
+        style={{
+          ...tw`text-[12px] text-[#666666] text-center`,
+          fontFamily: Fonts.PoppinsRegular,
+        }}
+      >
+        Pool
+      </Text>
     </View>
     <View style={tw`flex flex-1 justify-center`}>
       <Text
@@ -22,14 +29,28 @@ const DataHeader = () => (
           fontFamily: Fonts.PoppinsRegular,
         }}
       >
-        {"Best" + "\n" + "Offer"}
+        {'Best' + '\n' + 'Offer'}
       </Text>
     </View>
     <View style={tw`flex flex-1 justify-center`}>
-      <Text style={{ ...tw`text-[12px] text-[#666666] text-center`, fontFamily: Fonts.PoppinsRegular }}>Floor</Text>
+      <Text
+        style={{
+          ...tw`text-[12px] text-[#666666] text-center`,
+          fontFamily: Fonts.PoppinsRegular,
+        }}
+      >
+        Floor
+      </Text>
     </View>
     <View style={tw`flex flex-1 justify-center`}>
-      <Text style={{ ...tw`text-[12px] text-[#666666] text-center`, fontFamily: Fonts.PoppinsRegular }}>Days</Text>
+      <Text
+        style={{
+          ...tw`text-[12px] text-[#666666] text-center`,
+          fontFamily: Fonts.PoppinsRegular,
+        }}
+      >
+        Days
+      </Text>
     </View>
     <View style={tw`flex flex-1 justify-center`} />
   </View>
@@ -39,7 +60,7 @@ const LIMIT = 30
 const SCROLL_TO_TOP_THRESHOLD = 300
 
 export function LendScreen({ navigation }: any) {
-  const [search, setSearch] = useState<string>("")
+  const [search, setSearch] = useState<string>('')
   const [lendModalVisible, setLendModalVisible] = useState<boolean>(false)
   const [offset, setOffset] = useState<number>(0)
   const [showScrollToTop, setShowScrollToTop] = useState<boolean>(false)
@@ -47,7 +68,7 @@ export function LendScreen({ navigation }: any) {
   const [selectedOrderBook, setSelectedOrderBook] = useState(null)
 
   const [getOrderBooks, { data, loading }] = useLazyQuery(GET_ORDER_BOOKS, {
-    fetchPolicy: "no-cache",
+    fetchPolicy: 'no-cache',
   })
   const [fetchedOrderBooks, setFetchedOrderBooks] = useState<any[]>([])
 
@@ -94,7 +115,7 @@ export function LendScreen({ navigation }: any) {
       <LendModal visible={lendModalVisible} onClose={() => setLendModalVisible(false)} orderBook={selectedOrderBook} />
       <Search value={search} onChangeText={(text: string) => setSearch(text)} loading={false} />
       <DataHeader />
-      <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}>
+      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
         {loading && !fetchedOrderBooks.length ? (
           <ActivityIndicator size={25} color="#63ECD2" />
         ) : (
@@ -103,9 +124,10 @@ export function LendScreen({ navigation }: any) {
             refreshControl={<RefreshControl refreshing={true} />}
             showsVerticalScrollIndicator={false}
             data={fetchedOrderBooks}
-            keyExtractor={(item) => "orderbook_" + item.id}
-            renderItem={({ item }) => (
+            keyExtractor={(item) => 'orderbook_' + item.id}
+            renderItem={({ item, index }) => (
               <OrderBookRow
+                key={index}
                 orderBook={item}
                 actionLabel="Lend"
                 onActionPress={() => {
@@ -137,19 +159,19 @@ export function LendScreen({ navigation }: any) {
       </View>
       <View style={tw`flex items-center w-full`}>
         {(loading as any) && fetchedOrderBooks.length ? (
-          <ActivityIndicator size={22} color="#63ECD2" />
+          <ActivityIndicator size={26} color="#63ECD2" />
         ) : (
           showScrollToTop && (
             <TouchableOpacity
               style={tw`text-white flex justify-center items-center bg-black rounded-full p-1 border-2 border-[#63ECD2]`}
               onPress={() => flatListRef?.current?.scrollToIndex({ index: 0 })}
             >
-              <Image source={require("/assets/arrow-up.png")} style={tw`w-4 h-4`} />
+              <Image source={require('/assets/arrow-up.png')} style={tw`w-4 h-4`} />
             </TouchableOpacity>
           )
         )}
       </View>
-      <Footer navigation={navigation} activeScreen={"Lend"} />
+      <Footer navigation={navigation} activeScreen={'Lend'} />
     </Screen>
   )
 }

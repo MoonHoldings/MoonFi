@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client"
+import { gql } from '@apollo/client'
 
 export const MY_OFFERS = gql`
   query MyOffers($args: GetLoansArgs) {

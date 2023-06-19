@@ -1,13 +1,5 @@
-import * as React from "react";
-import Svg, {
-  SvgProps,
-  G,
-  Path,
-  Defs,
-  LinearGradient,
-  Stop,
-  ClipPath,
-} from "react-native-svg";
+import * as React from 'react'
+import Svg, { SvgProps, G, Path, Defs, LinearGradient, Stop, ClipPath } from 'react-native-svg'
 
 export const SearchIcon = (props: SvgProps) => (
   <Svg width={14} height={14} fill="none" {...props}>
@@ -20,14 +12,7 @@ export const SearchIcon = (props: SvgProps) => (
       />
     </G>
     <Defs>
-      <LinearGradient
-        id="b"
-        x1={7}
-        x2={7}
-        y1={0.75}
-        y2={13.25}
-        gradientUnits="userSpaceOnUse"
-      >
+      <LinearGradient id="b" x1={7} x2={7} y1={0.75} y2={13.25} gradientUnits="userSpaceOnUse">
         <Stop stopColor="#61D9EB" />
         <Stop offset={1} stopColor="#63ECD2" />
       </LinearGradient>
@@ -36,4 +21,4 @@ export const SearchIcon = (props: SvgProps) => (
       </ClipPath>
     </Defs>
   </Svg>
-);
+)
