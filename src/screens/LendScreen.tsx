@@ -125,8 +125,9 @@ export function LendScreen({ navigation }: any) {
             showsVerticalScrollIndicator={false}
             data={fetchedOrderBooks}
             keyExtractor={(item) => 'orderbook_' + item.id}
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
               <OrderBookRow
+                key={index}
                 orderBook={item}
                 actionLabel="Lend"
                 onActionPress={() => {
