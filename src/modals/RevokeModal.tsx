@@ -142,7 +142,7 @@ export const RevokeModal = ({ visible, onClose, offer }: { visible: boolean; onC
             <Text style={{ ...tw`text-white text-[11px]`, fontFamily: Fonts.InterSemiBold }}>Offer Amount</Text>
             <View style={tw`flex flex-row items-center`}>
               <Image source={require('/assets/sol.svg')} style={tw`w-5 h-5 mx-[4px]`} />
-              <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.InterSemiBold }}>{offer.offerAmount}</Text>
+              <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.InterSemiBold }}>{offer.amountOffered}</Text>
             </View>
           </View>
           <View style={tw`flex flex-row w-full items-center justify-between mt-6`}>

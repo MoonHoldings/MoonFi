@@ -135,7 +135,7 @@ export function OffersScreen({ navigation }: any) {
             duration: Math.floor(offer?.orderBook?.duration / 86400),
             apy: offer?.orderBook?.apyAfterFee,
             floorPriceSol: toCurrencyFormat(offer?.orderBook?.nftList?.floorPriceSol ?? 0),
-            offerAmount: toCurrencyFormat(offer?.principalLamports / LAMPORTS_PER_SOL),
+            amountOffered: toCurrencyFormat(offer?.principalLamports / LAMPORTS_PER_SOL),
             offerInterest,
           })
           setRevokeModalVisible(true)
@@ -146,29 +146,28 @@ export function OffersScreen({ navigation }: any) {
 
   const renderHistoricalOffer = (offer: any, index: number) => {
     const defaultImage = 'https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FMoonHolders.10dd0302.jpg&w=128&q=75'
+    const parsedOffer = {
+      apy: offer?.apy,
+      collectionImage: offer?.collectionImage ?? defaultImage,
+      collectionName: offer?.collectionName,
+      duration: Math.floor(offer?.loanDurationSeconds / 86400),
+      floorPriceSol: toCurrencyFormat(offer?.floorPriceSol ?? 0),
+      amountOffered: offer?.amountOffered,
+      offerInterest: offer.offerInterest.toFixed(4),
+      remainingDays: offer?.remainingDays,
+      status: offer?.status,
+      repayElapsedTime: offer?.repayElapsedTime,
+      foreclosedElapsedTime: offer?.foreclosedElapsedTime,
+      isHistorical: true,
+    }
 
     return (
       <OfferRow
         key={index}
         actionLabel="View"
-        offer={{
-          apy: offer?.apy,
-          collectionImage: offer?.collectionImage ?? defaultImage,
-          collectionName: offer?.collectionName,
-          amountOffered: offer?.amountOffered,
-          offerInterest: offer.offerInterest.toFixed(4),
-          remainingDays: offer?.remainingDays,
-          isHistorical: true,
-          status: offer?.status,
-          repayElapsedTime: offer?.repayElapsedTime,
-          foreclosedElapsedTime: offer?.foreclosedElapsedTime,
-        }}
+        offer={parsedOffer}
         onActionPress={() => {
-          setActiveOffer({
-            collectionName: offer?.collectionName,
-            duration: Math.floor(offer?.loanDurationSeconds / 86400),
-            apy: offer?.apy,
-          })
+          setActiveOffer(parsedOffer)
           setViewModalVisible(true)
         }}
       />
@@ -177,7 +176,7 @@ export function OffersScreen({ navigation }: any) {
 
   return (
     <Screen style={tw`flex bg-black`}>
-      <ViewLoanModal visible={viewModalVisible} onClose={() => setViewModalVisible(false)} />
+      <ViewLoanModal visible={viewModalVisible} onClose={() => setViewModalVisible(false)} offer={activeOffer} />
       <RevokeModal visible={revokeModalVisible} onClose={() => setRevokeModalVisible(false)} offer={activeOffer} />
       <View style={tw`flex flex-col rounded-lg bg-[#1F2126] w-full justify-center mb-4 py-3 px-5`}>
         <View style={tw`flex flex-row w-full`}>

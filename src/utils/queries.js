@@ -59,6 +59,7 @@ export const MY_HISTORICAL_OFFERS = gql`
       repayElapsedTime
       borrowInterest
       daysPercentProgress
+      floorPriceSol
     }
   }
 `
