@@ -82,7 +82,7 @@ export function OffersScreen({ navigation }: any) {
       if (solPublicKey && !loadingHistoricalOffers) {
         getMyHistoricalOffers({
           variables: {
-            lender: 'HtPS1sNkzVMp1VkC7iuW2AZanUnD28vaVgEEJ3gUwfYJ',
+            lender: solPublicKey,
           },
           pollInterval: 3_600_000,
         })
@@ -219,7 +219,7 @@ export function OffersScreen({ navigation }: any) {
           />
         )}
         {loading && <ActivityIndicator size={25} color="#63ECD2" />}
-        {myOffers?.getLoans?.data?.length === 0 && !loading && (
+        {myOffers?.getLoans?.data?.length === 0 && myHistoricalOffers?.getHistoricalLoansByUser?.length === 0 && !loading && (
           <View style={tw`w-full flex items-center justify-center`}>
             <Text style={{ ...tw`text-white text-[15px]` }}>No data</Text>
           </View>
