@@ -19,7 +19,7 @@ const HeaderBar = () => {
 }
 
 export const RevokeModal = ({ visible, onClose, offer }: { visible: boolean; onClose?: any; offer: any }) => {
-  if (!offer) return null
+  if (!offer || !visible) return null
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState<boolean>(false)

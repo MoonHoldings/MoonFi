@@ -12,7 +12,7 @@ const HeaderBar = () => {
 }
 
 export const ViewLoanModal = ({ visible, onClose, offer }: { visible: boolean; onClose?: any; offer?: any }) => {
-  if (!offer) return null
+  if (!offer || !visible) return null
 
   const renderCloseButton = () => {
     return (
