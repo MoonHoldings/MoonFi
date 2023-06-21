@@ -44,8 +44,8 @@ export function OffersScreen({ navigation }: any) {
   const [viewModalVisible, setViewModalVisible] = useState(false)
   const [revokeModalVisible, setRevokeModalVisible] = useState(false)
   const [activeOffer, setActiveOffer] = useState<any | null>(null)
-  const isFocused = useIsFocused()
 
+  const isFocused = useIsFocused()
   const publicKeys = usePublicKeys()
 
   const [getMyOffers, { data: myOffers, loading: loadingOffers, stopPolling: stopPollingOffers }] = useLazyQuery(MY_OFFERS)
@@ -75,22 +75,22 @@ export function OffersScreen({ navigation }: any) {
     }
   }, [isFocused, publicKeys, loadingOffers])
 
-  useEffect(() => {
-    if (isFocused) {
-      const solPublicKey = publicKeys?.solana
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     const solPublicKey = publicKeys?.solana
 
-      if (solPublicKey && !loadingHistoricalOffers) {
-        getMyHistoricalOffers({
-          variables: {
-            lender: solPublicKey,
-          },
-          pollInterval: 3_600_000,
-        })
-      }
-    } else {
-      stopPolling()
-    }
-  }, [isFocused, publicKeys, loadingHistoricalOffers])
+  //     if (solPublicKey && !loadingHistoricalOffers) {
+  //       getMyHistoricalOffers({
+  //         variables: {
+  //           lender: solPublicKey,
+  //         },
+  //         pollInterval: 3_600_000,
+  //       })
+  //     }
+  //   } else {
+  //     stopPolling()
+  //   }
+  // }, [isFocused, publicKeys, loadingHistoricalOffers])
 
   const getNonHistoricalOffers = () => {
     let offers: any[] = []
@@ -211,7 +211,7 @@ export function OffersScreen({ navigation }: any) {
         {!loading && (
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={[...getActiveHistoricalOffers(), ...getNonHistoricalOffers(), ...getInactiveHistoricalOffers()]}
+            data={[...getNonHistoricalOffers()]}
             renderItem={({ item: offer, index }) => {
               if (!offer.isHistorical) return renderNonHistoricalOffer(offer, index)
               else return renderHistoricalOffer(offer, index)
@@ -219,7 +219,7 @@ export function OffersScreen({ navigation }: any) {
           />
         )}
         {loading && <ActivityIndicator size={25} color="#63ECD2" />}
-        {myOffers?.getLoans?.data?.length === 0 && myHistoricalOffers?.getHistoricalLoansByUser?.length === 0 && !loading && (
+        {myOffers?.getLoans?.data?.length === 0 && !loading && (
           <View style={tw`w-full flex items-center justify-center`}>
             <Text style={{ ...tw`text-white text-[15px]` }}>No data</Text>
           </View>
