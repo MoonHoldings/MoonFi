@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { FlatList, View, Text, ActivityIndicator, RefreshControl, TouchableOpacity, Image } from 'react-native'
-import { useFocusEffect, useIsFocused } from '@react-navigation/native'
+import { useIsFocused } from '@react-navigation/native'
 import tw from 'twrnc'
 import { useLazyQuery } from '@apollo/client'
 
@@ -61,7 +61,7 @@ const LIMIT = 30
 const SCROLL_TO_TOP_THRESHOLD = 300
 
 export function BorrowScreen({ navigation }: any) {
-  const [search, setSearch] = useState<string>('')
+  const [search, setSearch] = useState<string | null>(null)
   const [borrowModalVisible, setBorrowModalVisible] = useState<boolean>(false)
   const [offset, setOffset] = useState<number>(0)
   const [showScrollToTop, setShowScrollToTop] = useState<boolean>(false)
@@ -77,7 +77,7 @@ export function BorrowScreen({ navigation }: any) {
   const [fetchedOrderBooks, setFetchedOrderBooks] = useState<any[]>([])
 
   useEffect(() => {
-    if (isFocused && publicKeys) {
+    if (isFocused && publicKeys?.solana) {
       fetchOrderBooks()
     } else {
       setSearch('')
@@ -85,15 +85,19 @@ export function BorrowScreen({ navigation }: any) {
   }, [isFocused, publicKeys])
 
   useEffect(() => {
-    if (search.length > 2) {
-      fetchOrderBooks(true)
-    } else if (search.length === 0) {
-      fetchOrderBooks(true)
+    if (search !== null) {
+      if (search.length > 2) {
+        fetchOrderBooks(true)
+      } else if (search.length === 0) {
+        fetchOrderBooks(true)
+      }
     }
   }, [search])
 
   const fetchOrderBooks = async (isSearch = false) => {
     const solPublicKey = publicKeys?.solana
+
+    console.log(solPublicKey)
 
     const { data } = await getOrderBooks({
       variables: {
@@ -123,7 +127,7 @@ export function BorrowScreen({ navigation }: any) {
   return (
     <Screen style={tw`flex bg-black`}>
       <BorrowModal visible={borrowModalVisible} onClose={() => setBorrowModalVisible(false)} orderBook={selectedOrderBook} />
-      <Search value={search} onChangeText={(text: string) => setSearch(text)} loading={false} />
+      <Search value={search ?? ''} onChangeText={(text: string) => setSearch(text)} loading={false} />
       <DataHeader />
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
         {loading && !fetchedOrderBooks.length ? (
@@ -169,7 +173,7 @@ export function BorrowScreen({ navigation }: any) {
         )}
       </View>
       <View style={tw`flex items-center w-full`}>
-        {(loading as any) && fetchedOrderBooks.length ? (
+        {(loading as any) && fetchedOrderBooks.length > 0 ? (
           <ActivityIndicator size={26} color="#63ECD2" />
         ) : (
           showScrollToTop && (

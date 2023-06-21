@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { FlatList, View, Text, ActivityIndicator, RefreshControl, TouchableOpacity, Image } from 'react-native'
-import { useFocusEffect, useIsFocused } from '@react-navigation/native'
+import { useIsFocused } from '@react-navigation/native'
 import tw from 'twrnc'
 import { useLazyQuery } from '@apollo/client'
 
@@ -60,7 +60,7 @@ const LIMIT = 30
 const SCROLL_TO_TOP_THRESHOLD = 300
 
 export function LendScreen({ navigation }: any) {
-  const [search, setSearch] = useState<string>('')
+  const [search, setSearch] = useState<string | null>(null)
   const [lendModalVisible, setLendModalVisible] = useState<boolean>(false)
   const [offset, setOffset] = useState<number>(0)
   const [showScrollToTop, setShowScrollToTop] = useState<boolean>(false)
@@ -82,41 +82,45 @@ export function LendScreen({ navigation }: any) {
   }, [isFocused])
 
   useEffect(() => {
-    if (search.length > 2) {
-      fetchOrderBooks(true)
-    } else if (search.length === 0) {
-      fetchOrderBooks(true)
+    if (search !== null) {
+      if (search.length > 2) {
+        fetchOrderBooks(true)
+      } else if (search.length === 0) {
+        fetchOrderBooks(true)
+      }
     }
   }, [search])
 
   const fetchOrderBooks = async (isSearch = false) => {
-    const { data } = await getOrderBooks({
-      variables: {
-        args: {
-          filter: {
-            search,
-          },
-          pagination: {
-            limit: LIMIT,
-            offset: isSearch ? 0 : offset,
+    if (!loading) {
+      const { data } = await getOrderBooks({
+        variables: {
+          args: {
+            filter: {
+              search,
+            },
+            pagination: {
+              limit: LIMIT,
+              offset: isSearch ? 0 : offset,
+            },
           },
         },
-      },
-    })
-    const orderBooks = data?.getOrderBooks?.data
+      })
+      const orderBooks = data?.getOrderBooks?.data
 
-    if (orderBooks && !isSearch) {
-      setFetchedOrderBooks([...fetchedOrderBooks, ...orderBooks])
-      setOffset((prevOffset) => prevOffset + LIMIT)
-    } else if (orderBooks) {
-      setFetchedOrderBooks(orderBooks)
+      if (orderBooks && !isSearch) {
+        setFetchedOrderBooks([...fetchedOrderBooks, ...orderBooks])
+        setOffset((prevOffset) => prevOffset + LIMIT)
+      } else if (orderBooks) {
+        setFetchedOrderBooks(orderBooks)
+      }
     }
   }
 
   return (
     <Screen style={tw`flex bg-black`}>
       <LendModal visible={lendModalVisible} onClose={() => setLendModalVisible(false)} orderBook={selectedOrderBook} />
-      <Search value={search} onChangeText={(text: string) => setSearch(text)} loading={false} />
+      <Search value={search ?? ''} onChangeText={(text: string) => setSearch(text)} loading={false} />
       <DataHeader />
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
         {loading && !fetchedOrderBooks.length ? (
