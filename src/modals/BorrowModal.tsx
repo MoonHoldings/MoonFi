@@ -279,7 +279,7 @@ export const BorrowModal = ({ visible, onClose, orderBook }: { visible: boolean;
             </View>
           </View>
           <View style={tw`flex w-full justify-center items-center mt-2`}>
-            <TouchableOpacity style={tw`border flex flex-row border-2 border-[#63ECD2] rounded-md items-center py-3 px-8 bg-[#63ECD2]`} onPress={borrow} disabled={isSubmitting}>
+            <TouchableOpacity style={tw`border flex flex-row border-2 border-[#63ECD2] rounded-md items-center py-3 px-8 bg-[#63ECD2]`} onPress={borrow} disabled={isSubmitting || loadingMyLoans}>
               <Text
                 style={{
                   ...tw`text-black text-[14px]`,
