@@ -4,7 +4,6 @@ import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import tw from 'twrnc'
 
 import Fonts from '../utils/Fonts'
-import toCurrencyFormat from '../utils/toCurrencyFormat'
 
 export const LoanRow = ({ loan, onRepay }: { loan: any; onRepay: any }) => {
   const defaultImage = 'https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FMoonHolders.10dd0302.jpg&w=128&q=75'
