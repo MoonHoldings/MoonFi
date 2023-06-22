@@ -6,7 +6,9 @@
   "website": "https://www.moonholdings.xyz/",
   "kind": "app",
   "icon": {
-    "md": "./assets/icon.svg"
+    "sm": "./assets/icon.png",
+    "md": "./assets/icon.png",
+    "lg": "./assets/icon.png"
   },
   "contact": "test@gmail.com",
   "screenshots": ["./assets/screenShot.png"],
@@ -14,5 +16,6 @@
     "default": {
       "web": "./web-build/index.html"
     }
-  }
+  },
+  "tag": "defi"
 }
