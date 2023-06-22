@@ -200,8 +200,8 @@ export const RepayModal = ({ visible, onClose, loan }: { visible: boolean; onClo
           <View style={tw`w-full h-[1px] bg-[#ffffff1a] my-3`} />
           <TouchableOpacity
             style={tw`flex flex-row justify-center border border-2 border-[#63ECD2] rounded-md items-center py-3 px-8 bg-[#63ECD2] w-full mt-2`}
-            onPress={repay}
-            disabled={isSubmitting || isSuccess}
+            onPress={isSuccess ? onClose : repay}
+            disabled={isSubmitting}
           >
             <Text
               style={{

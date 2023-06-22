@@ -33,7 +33,7 @@ export const BorrowModal = ({ visible, onClose, orderBook }: { visible: boolean;
   const [getBestOffer, { data, loading, stopPolling, startPolling }] = useLazyQuery(GET_BEST_OFFER_FOR_BORROW, {
     fetchPolicy: 'no-cache',
   })
-  const [getMyLoans, { data: myLoans, loading: loadingMyLoans }] = useLazyQuery(MY_LOANS)
+  const [getMyLoans, { data: myLoans, loading: loadingMyLoans, stopPolling: stopPollingMyLoans }] = useLazyQuery(MY_LOANS)
 
   const [borrowLoan] = useMutation(BORROW_LOAN)
 
@@ -62,11 +62,13 @@ export const BorrowModal = ({ visible, onClose, orderBook }: { visible: boolean;
             },
           },
         },
+        pollInterval: 1000,
       })
     }
 
     if (!visible) {
       stopPolling()
+      stopPollingMyLoans()
     }
   }, [visible])
 
@@ -316,7 +318,7 @@ export const BorrowModal = ({ visible, onClose, orderBook }: { visible: boolean;
           )}
           {failMessage && (
             <View style={tw`flex w-full justify-center items-center mt-1`}>
-              <Text style={tw`mt-2 text-[11px] text-red-500`}>{failMessage}</Text>
+              <Text style={tw`mt-2 text-[11px] text-center text-red-500`}>{failMessage}</Text>
             </View>
           )}
         </View>
