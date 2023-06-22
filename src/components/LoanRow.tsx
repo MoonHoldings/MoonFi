@@ -7,6 +7,8 @@ import Fonts from '../utils/Fonts'
 import toCurrencyFormat from '../utils/toCurrencyFormat'
 
 export const LoanRow = ({ loan, onRepay }: { loan: any; onRepay: any }) => {
+  const defaultImage = 'https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FMoonHolders.10dd0302.jpg&w=128&q=75'
+
   const getRemainingDays = (loan: any) => {
     const startTime = new Date(loan.start * 1000)
     const duration = loan.duration
@@ -21,7 +23,7 @@ export const LoanRow = ({ loan, onRepay }: { loan: any; onRepay: any }) => {
   return (
     <View style={tw`flex flex-row justify-between items-center py-3 border-b border-[#ffffff33] px-3`}>
       <View style={tw`flex flex-1 justify-center`}>
-        <Image source={{ uri: 'https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsharx.05c4d190.png&w=128&q=75' }} style={tw`w-8 h-8`} />
+        <Image source={{ uri: loan?.orderBook?.nftList?.collectionImage ?? defaultImage }} style={tw`w-8 h-8`} />
       </View>
       <View style={tw`flex flex-1 justify-center`}>
         <Text style={{ ...tw`text-[11px] text-[#63ECD2] text-center`, fontFamily: Fonts.PoppinsLight }}>{(loan?.totalOwedLamports / LAMPORTS_PER_SOL).toFixed(4)}</Text>

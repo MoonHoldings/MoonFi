@@ -40,10 +40,10 @@ const TableHeader = () => (
 )
 
 export function OffersScreen({ navigation }: any) {
-  const [text, onChangeText] = useState('')
   const [viewModalVisible, setViewModalVisible] = useState(false)
   const [revokeModalVisible, setRevokeModalVisible] = useState(false)
   const [activeOffer, setActiveOffer] = useState<any | null>(null)
+  const [search, setSearch] = useState<string>('')
 
   const isFocused = useIsFocused()
   const publicKeys = usePublicKeys()
@@ -98,6 +98,12 @@ export function OffersScreen({ navigation }: any) {
     if (myOffers?.getLoans?.data?.length) {
       offers = [...myOffers?.getLoans?.data]
       offers.sort((a: any, b: any) => a.offerTime - b.offerTime)
+    }
+
+    if (search.length) {
+      return offers
+        .filter((offer: any) => offer?.orderBook?.nftList?.collectionName?.toLocaleLowerCase()?.includes(search?.toLocaleLowerCase()))
+        .map((offer: any) => ({ ...offer, isHistorical: false }))
     }
 
     return offers.map((offer: any) => ({ ...offer, isHistorical: false }))
@@ -174,6 +180,16 @@ export function OffersScreen({ navigation }: any) {
     )
   }
 
+  const currentOffers = myOffers?.getLoans?.data?.reduce((accumulator: number, offer: any) => {
+    return accumulator + offer?.principalLamports / LAMPORTS_PER_SOL
+  }, 0)
+
+  const expectedInterest = myOffers?.getLoans?.data?.reduce((accumulator: number, offer: any) => {
+    return (
+      accumulator + parseFloat(calculateLendInterest(offer?.principalLamports / LAMPORTS_PER_SOL, offer?.orderBook?.duration, offer?.orderBook?.apy, offer?.orderBook?.feePermillicentage) as string)
+    )
+  }, 0)
+
   return (
     <Screen style={tw`flex bg-black`}>
       <ViewLoanModal visible={viewModalVisible} onClose={() => setViewModalVisible(false)} offer={activeOffer} />
@@ -184,28 +200,28 @@ export function OffersScreen({ navigation }: any) {
             <Text style={{ ...tw`text-white text-[11px]`, fontFamily: Fonts.PoppinsSemiBold }}>Interest Earned</Text>
           </View>
           <View style={tw`flex flex-1 items-center`}>
-            <Text style={{ ...tw`text-white text-center text-[11px]`, fontFamily: Fonts.PoppinsSemiBold }}>Active Loan Value</Text>
+            <Text style={{ ...tw`text-white text-center text-[11px]`, fontFamily: Fonts.PoppinsSemiBold }}>Current Offers</Text>
           </View>
           <View style={tw`flex flex-1 items-end`}>
-            <Text style={{ ...tw`text-white text-[11px]`, fontFamily: Fonts.PoppinsSemiBold }}>Offer Value</Text>
+            <Text style={{ ...tw`text-white text-[11px]`, fontFamily: Fonts.PoppinsSemiBold }}>Expected Interest</Text>
           </View>
         </View>
         <View style={tw`flex flex-row w-full mt-1`}>
           <View style={tw`flex flex-row flex-1 justify-start items-center`}>
-            <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
-            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>10.02</Text>
+            {/* <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} /> */}
+            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>-</Text>
           </View>
           <View style={tw`flex flex-row flex-1 justify-center items-center`}>
             <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
-            <Text style={{ ...tw`text-white text-center text-[16px]`, fontFamily: Fonts.PoppinsLight }}>1.20</Text>
+            <Text style={{ ...tw`text-white text-center text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{currentOffers}</Text>
           </View>
           <View style={tw`flex flex-row flex-1 justify-end items-center`}>
             <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
-            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>5.60</Text>
+            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{expectedInterest}</Text>
           </View>
         </View>
       </View>
-      <Search value={text} onChangeText={onChangeText} loading={false} />
+      <Search value={search} onChangeText={setSearch} loading={false} />
       <TableHeader />
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
         {!loading && (

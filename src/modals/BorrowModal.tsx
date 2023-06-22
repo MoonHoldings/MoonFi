@@ -142,7 +142,6 @@ export const BorrowModal = ({ visible, onClose, orderBook }: { visible: boolean;
 
     if (data && data.length) {
       const bestOffer = data[0]
-      console.log('bestOffer', bestOffer)
       const offeredOrTaken: any = await sharkyClient.fetchLoan({
         program,
         loanPubKey: new PublicKey(bestOffer.pubKey),

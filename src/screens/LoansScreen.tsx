@@ -8,6 +8,7 @@ import { MY_HISTORICAL_OFFERS, MY_LOANS } from '../utils/queries'
 import { usePublicKeys } from '../hooks/xnft-hooks'
 import { useIsFocused } from '@react-navigation/native'
 import { RepayModal } from '../modals'
+import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 
 const TableHeader = () => (
   <View style={tw`flex w-[80%] flex-row justify-around items-center mt-3`}>
@@ -34,6 +35,7 @@ export function LoansScreen({ navigation }: any) {
   const [text, onChangeText] = useState('')
   const [repayModalVisible, setRepayModalVisible] = useState(false)
   const [activeLoan, setActiveLoan] = useState(false)
+  const [search, setSearch] = useState<string>('')
 
   const isFocused = useIsFocused()
   const publicKeys = usePublicKeys()
@@ -90,8 +92,23 @@ export function LoansScreen({ navigation }: any) {
       offers.sort((a: any, b: any) => a.offerTime - b.offerTime)
     }
 
+    if (search.length) {
+      return offers
+        .filter((offer: any) => offer?.orderBook?.nftList?.collectionName?.toLocaleLowerCase()?.includes(search?.toLocaleLowerCase()))
+        .map((offer: any) => ({ ...offer, isHistorical: false }))
+    }
+
     return offers.map((offer: any) => ({ ...offer, isHistorical: false }))
   }
+
+  const activeLoansCount = myLoans?.getLoans?.data?.length
+  const borrowedValue = myLoans?.getLoans?.data?.reduce((accumulator: number, loan: any) => {
+    return accumulator + loan?.principalLamports / LAMPORTS_PER_SOL
+  }, 0)
+  const owedValue = myLoans?.getLoans?.data?.reduce((accumulator: number, loan: any) => {
+    return accumulator + loan?.totalOwedLamports / LAMPORTS_PER_SOL
+  }, 0)
+  const interestOwed = owedValue - borrowedValue
 
   return (
     <Screen style={tw`flex bg-black`}>
@@ -110,19 +127,19 @@ export function LoansScreen({ navigation }: any) {
         </View>
         <View style={tw`flex flex-row w-full mt-1`}>
           <View style={tw`flex flex-row flex-1 justify-start items-center`}>
-            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>1</Text>
+            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{activeLoansCount}</Text>
           </View>
           <View style={tw`flex flex-row flex-1 justify-center items-center`}>
             <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
-            <Text style={{ ...tw`text-white text-center text-[16px]`, fontFamily: Fonts.PoppinsLight }}>1.20</Text>
+            <Text style={{ ...tw`text-white text-center text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{borrowedValue?.toFixed(4)}</Text>
           </View>
           <View style={tw`flex flex-row flex-1 justify-end items-center`}>
             <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
-            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>5.60</Text>
+            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{interestOwed?.toFixed(4)}</Text>
           </View>
         </View>
       </View>
-      <Search value={text} onChangeText={onChangeText} loading={false} />
+      <Search value={search} onChangeText={setSearch} loading={false} />
       <TableHeader />
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
         {!loading && (

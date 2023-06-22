@@ -97,8 +97,6 @@ export function BorrowScreen({ navigation }: any) {
   const fetchOrderBooks = async (isSearch = false) => {
     const solPublicKey = publicKeys?.solana
 
-    console.log(solPublicKey)
-
     const { data } = await getOrderBooks({
       variables: {
         args: {
