@@ -10,7 +10,6 @@ import Fonts from './utils/Fonts'
 import { ApolloProvider } from '@apollo/client'
 import client from './utils/apollo-client'
 import { Buffer } from 'buffer'
-import { ExtendModal } from './modals/ExtendModal'
 
 window.Buffer = Buffer
 
@@ -37,7 +36,6 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <ExtendModal visible />
       <RecoilRoot>
         <NavigationContainer>
           <Stack.Navigator
