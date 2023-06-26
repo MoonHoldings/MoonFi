@@ -140,7 +140,7 @@ export const LendModal = ({ visible, onClose, orderBook }: { visible: boolean; o
       const provider = createAnchorProvider()
 
       try {
-        const sharkyClient = createSharkyClient(provider as AnchorProvider)
+        const sharkyClient = createSharkyClient(provider as AnchorProvider, undefined, 'mainnet')
         const { program } = sharkyClient
 
         const { orderBook: orderBookInfo } = await sharkyClient.fetchOrderBook({

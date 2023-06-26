@@ -52,7 +52,7 @@ export const RevokeModal = ({ visible, onClose, offer }: { visible: boolean; onC
     try {
       setIsSubmitting(true)
       const provider = createAnchorProvider()
-      const sharkyClient = createSharkyClient(provider)
+      const sharkyClient = createSharkyClient(provider, undefined, 'mainnet')
       const { program } = sharkyClient
 
       const result = await sharkyClient.fetchLoan({

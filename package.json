@@ -19,7 +19,7 @@
     "@react-navigation/native": "6.0.10",
     "@react-navigation/native-stack": "6.6.1",
     "@react-navigation/stack": "6.2.1",
-    "@sharkyfi/client": "^6.2.0",
+    "@sharkyfi/client": "^6.3.2",
     "@solana/web3.js": "^1.77.3",
     "buffer": "^6.0.3",
     "commander": "^9.4.1",

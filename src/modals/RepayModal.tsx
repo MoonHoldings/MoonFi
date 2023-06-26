@@ -88,7 +88,7 @@ export const RepayModal = ({ visible, onClose, loan }: { visible: boolean; onClo
       setIsSubmitting(true)
 
       const provider = createAnchorProvider()
-      const sharkyClient = createSharkyClient(provider)
+      const sharkyClient = createSharkyClient(provider, undefined, 'mainnet')
       const { program } = sharkyClient
 
       const result = await sharkyClient.fetchLoan({

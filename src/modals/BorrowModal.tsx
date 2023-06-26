@@ -134,7 +134,7 @@ export const BorrowModal = ({ visible, onClose, orderBook }: { visible: boolean;
     setIsSuccess(false)
 
     const provider = createAnchorProvider()
-    const sharkyClient = createSharkyClient(provider)
+    const sharkyClient = createSharkyClient(provider, undefined, 'mainnet')
     const { program } = sharkyClient
 
     // Fetch best loan
