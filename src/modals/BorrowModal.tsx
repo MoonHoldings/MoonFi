@@ -1,4 +1,4 @@
-import { Modal, View, Image, TouchableOpacity, Text, TextInput, Platform, ScrollView, ActivityIndicator, Linking } from 'react-native'
+import { Modal, View, Image, TouchableOpacity, Text, ScrollView, ActivityIndicator, Linking } from 'react-native'
 import tw from 'twrnc'
 import { Header, Screen } from '../components'
 import Fonts from '../utils/Fonts'
@@ -30,7 +30,7 @@ export const BorrowModal = ({ visible, onClose, orderBook }: { visible: boolean;
   const [failMessage, setFailMessage] = useState<string | null>(null)
   const [txLink, setTxLink] = useState<string | null>(null)
 
-  const [getBestOffer, { data, loading, stopPolling, startPolling }] = useLazyQuery(GET_BEST_OFFER_FOR_BORROW, {
+  const [getBestOffer, { data, stopPolling }] = useLazyQuery(GET_BEST_OFFER_FOR_BORROW, {
     fetchPolicy: 'no-cache',
   })
   const [getMyLoans, { data: myLoans, loading: loadingMyLoans, stopPolling: stopPollingMyLoans }] = useLazyQuery(MY_LOANS)
