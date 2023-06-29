@@ -75,22 +75,24 @@ export function OffersScreen({ navigation }: any) {
     }
   }, [isFocused, publicKeys, loadingOffers])
 
-  // useEffect(() => {
-  //   if (isFocused) {
-  //     const solPublicKey = publicKeys?.solana
+  useEffect(() => {
+    if (isFocused) {
+      const solPublicKey = publicKeys?.solana
 
-  //     if (solPublicKey && !loadingHistoricalOffers) {
-  //       getMyHistoricalOffers({
-  //         variables: {
-  //           lender: solPublicKey,
-  //         },
-  //         pollInterval: 3_600_000,
-  //       })
-  //     }
-  //   } else {
-  //     stopPolling()
-  //   }
-  // }, [isFocused, publicKeys, loadingHistoricalOffers])
+      if (solPublicKey && !loadingHistoricalOffers) {
+        getMyHistoricalOffers({
+          variables: {
+            lender: solPublicKey,
+          },
+          pollInterval: 3_600_000,
+        })
+      }
+    } else {
+      stopPolling()
+    }
+  }, [isFocused, publicKeys, loadingHistoricalOffers])
+
+  console.log(myHistoricalOffers)
 
   const getNonHistoricalOffers = () => {
     let offers: any[] = []
@@ -190,6 +192,8 @@ export function OffersScreen({ navigation }: any) {
     )
   }, 0)
 
+  const data = [...getActiveHistoricalOffers(), ...getNonHistoricalOffers(), ...getInactiveHistoricalOffers()]
+
   return (
     <Screen style={tw`flex bg-black`}>
       <ViewLoanModal visible={viewModalVisible} onClose={() => setViewModalVisible(false)} offer={activeOffer} />
@@ -227,7 +231,7 @@ export function OffersScreen({ navigation }: any) {
         {!loading && (
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={[...getNonHistoricalOffers()]}
+            data={data}
             renderItem={({ item: offer, index }) => {
               if (!offer.isHistorical) return renderNonHistoricalOffer(offer, index)
               else return renderHistoricalOffer(offer, index)
@@ -235,7 +239,7 @@ export function OffersScreen({ navigation }: any) {
           />
         )}
         {loading && <ActivityIndicator size={25} color="#63ECD2" />}
-        {myOffers?.getLoans?.data?.length === 0 && !loading && (
+        {data?.length === 0 && !loading && (
           <View style={tw`w-full flex items-center justify-center`}>
             <Text style={{ ...tw`text-white text-[15px]` }}>No data</Text>
           </View>

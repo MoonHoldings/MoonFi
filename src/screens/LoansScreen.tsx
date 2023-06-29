@@ -67,22 +67,22 @@ export function LoansScreen({ navigation }: any) {
     }
   }, [isFocused, publicKeys, loadingMyLoans])
 
-  // useEffect(() => {
-  //   if (isFocused) {
-  //     const solPublicKey = publicKeys?.solana
+  useEffect(() => {
+    if (isFocused) {
+      const solPublicKey = publicKeys?.solana
 
-  //     if (solPublicKey && !loadingHistoricalLoans) {
-  //       getMyHistoricalLoans({
-  //         variables: {
-  //           borrower: solPublicKey,
-  //         },
-  //         pollInterval: 3_600_000,
-  //       })
-  //     }
-  //   } else {
-  //     stopPolling()
-  //   }
-  // }, [isFocused, publicKeys, loadingHistoricalLoans])
+      if (solPublicKey && !loadingHistoricalLoans) {
+        getMyHistoricalLoans({
+          variables: {
+            borrower: solPublicKey,
+          },
+          pollInterval: 3_600_000,
+        })
+      }
+    } else {
+      stopPolling()
+    }
+  }, [isFocused, publicKeys, loadingHistoricalLoans])
 
   const getNonHistoricalOffers = () => {
     let offers: any[] = []
@@ -101,6 +101,10 @@ export function LoansScreen({ navigation }: any) {
     return offers.map((offer: any) => ({ ...offer, isHistorical: false }))
   }
 
+  const getHistoricalOffers = () => {
+    return myHistoricalLoans?.getHistoricalLoansByUser?.map((offer: any) => ({ ...offer, isHistorical: true })) ?? []
+  }
+
   const activeLoansCount = myLoans?.getLoans?.data?.length
   const borrowedValue = myLoans?.getLoans?.data?.reduce((accumulator: number, loan: any) => {
     return accumulator + loan?.principalLamports / LAMPORTS_PER_SOL
@@ -109,6 +113,8 @@ export function LoansScreen({ navigation }: any) {
     return accumulator + loan?.totalOwedLamports / LAMPORTS_PER_SOL
   }, 0)
   const interestOwed = owedValue - borrowedValue
+
+  const data = [...getNonHistoricalOffers()]
 
   return (
     <Screen style={tw`flex bg-black`}>
@@ -145,7 +151,7 @@ export function LoansScreen({ navigation }: any) {
         {!loading && (
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={[...getNonHistoricalOffers()]}
+            data={data}
             renderItem={({ item, index }) => (
               <LoanRow
                 key={index}
@@ -159,7 +165,7 @@ export function LoansScreen({ navigation }: any) {
           />
         )}
         {loading && <ActivityIndicator size={25} color="#63ECD2" />}
-        {myLoans?.getLoans?.data?.length === 0 && !loading && (
+        {data?.length === 0 && !loading && (
           <View style={tw`w-full flex items-center justify-center`}>
             <Text style={{ ...tw`text-white text-[15px]` }}>No data</Text>
           </View>
