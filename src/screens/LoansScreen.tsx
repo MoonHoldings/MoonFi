@@ -7,7 +7,7 @@ import { useLazyQuery } from '@apollo/client'
 import { MY_HISTORICAL_OFFERS, MY_LOANS } from '../utils/queries'
 import { usePublicKeys } from '../hooks/xnft-hooks'
 import { useIsFocused } from '@react-navigation/native'
-import { RepayModal } from '../modals'
+import { ExtendModal, RepayModal } from '../modals'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 
 const TableHeader = () => (
@@ -32,8 +32,8 @@ const TableHeader = () => (
 )
 
 export function LoansScreen({ navigation }: any) {
-  const [text, onChangeText] = useState('')
   const [repayModalVisible, setRepayModalVisible] = useState(false)
+  const [extendModalVisible, setExtendModalVisible] = useState(false)
   const [activeLoan, setActiveLoan] = useState(false)
   const [search, setSearch] = useState<string>('')
 
@@ -119,6 +119,8 @@ export function LoansScreen({ navigation }: any) {
   return (
     <Screen style={tw`flex bg-black`}>
       <RepayModal visible={repayModalVisible} onClose={() => setRepayModalVisible(false)} loan={activeLoan} />
+      <ExtendModal visible={extendModalVisible} onClose={() => setExtendModalVisible(false)} loan={activeLoan} />
+
       <View style={tw`flex flex-col rounded-lg bg-[#1F2126] w-full justify-center mb-4 py-3 px-5`}>
         <View style={tw`flex flex-row w-full`}>
           <View style={tw`flex flex-1 items-start`}>
@@ -159,6 +161,10 @@ export function LoansScreen({ navigation }: any) {
                 onRepay={() => {
                   setActiveLoan(item)
                   setRepayModalVisible(true)
+                }}
+                onExtend={() => {
+                  setActiveLoan(item)
+                  setExtendModalVisible(true)
                 }}
               />
             )}

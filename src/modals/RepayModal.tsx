@@ -1,14 +1,15 @@
 import { Modal, View, Image, TouchableOpacity, Text, Linking, ActivityIndicator } from 'react-native'
 import tw from 'twrnc'
 import { Header, Screen } from '../components'
-import Fonts from '../utils/Fonts'
 import { LAMPORTS_PER_SOL, PublicKey, TransactionSignature } from '@solana/web3.js'
 import { createSharkyClient } from '@sharkyfi/client'
 import createAnchorProvider from '../utils/createAnchorProvider'
 import waitTransactionConfirmation from '../utils/waitTransactionConfirmation'
 import { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
+import Fonts from '../utils/Fonts'
 import { DELETE_LOAN_BY_PUBKEY } from '../utils/mutations'
+import breakdownLoanDuration from '../utils/breakdownLoanDuration'
 
 const HeaderBar = () => {
   return (
@@ -40,35 +41,6 @@ export const RepayModal = ({ visible, onClose, loan }: { visible: boolean; onClo
         <Image source={require('/assets/icon-x-square.svg')} style={{ ...tw`h-6 w-6 absolute top-0 right-0 z-50` }} />
       </TouchableOpacity>
     )
-  }
-
-  const breakdownDuration = (start: number, duration: number) => {
-    // Get the current date and time
-    const startDate: any = new Date(start * 1000)
-    const now: any = new Date()
-
-    // Convert duration to milliseconds
-    const durationMs = duration * 1000
-
-    // Calculate the target date and time
-    const target: any = new Date(startDate.getTime() + durationMs)
-
-    // Calculate the difference in milliseconds
-    const diffMs = target - now
-
-    // Calculate the remaining days, hours, minutes, and seconds
-    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24))
-    const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60))
-    const seconds = Math.floor((diffMs % (1000 * 60)) / 1000)
-
-    // Return the breakdown as an object
-    return {
-      days,
-      hours,
-      minutes,
-      seconds,
-    }
   }
 
   const onSuccess = async (tx: TransactionSignature, pubKey: string) => {
@@ -136,9 +108,8 @@ export const RepayModal = ({ visible, onClose, loan }: { visible: boolean; onClo
     }
   }
 
-  const { days, hours, minutes } = breakdownDuration(loan?.start, loan?.duration)
-
-  console.log(loan)
+  const { days, hours, minutes } = breakdownLoanDuration(loan?.start, loan?.duration)
+  const defaultImage = 'https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FMoonHolders.10dd0302.jpg&w=128&q=75'
 
   return (
     <Modal animationType="fade" visible={visible} onRequestClose={onClose}>
@@ -147,7 +118,7 @@ export const RepayModal = ({ visible, onClose, loan }: { visible: boolean; onClo
         <View style={tw`flex w-full bg-[${isSuccess ? '#022628' : '#1F2126'}] rounded-md p-[16px]`}>
           <View style={{ zIndex: 999 }}>{renderCloseButton()}</View>
           <View style={tw`flex justify-center items-center`}>
-            <Image source={{ uri: 'https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsharx.05c4d190.png&w=128&q=75' }} style={tw`w-15 h-15 rounded-full`} />
+            <Image source={{ uri: loan?.orderBook?.nftList?.collectionImage ?? defaultImage }} style={tw`w-15 h-15 rounded-full`} />
             <Text style={{ ...tw`text-white text-[20px] mt-1`, fontFamily: Fonts.PoppinsBold }}>{isSuccess ? 'SUCCESS!' : loan?.orderBook?.nftList?.collectionName}</Text>
           </View>
           <View style={tw`flex flex-row w-full mt-3 justify-center`}>

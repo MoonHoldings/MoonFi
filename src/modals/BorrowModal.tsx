@@ -131,7 +131,6 @@ export const BorrowModal = ({ visible, onClose, orderBook }: { visible: boolean;
 
     setIsSubmitting(true)
     setFailMessage(null)
-    setIsSuccess(false)
 
     const provider = createAnchorProvider()
     const sharkyClient = createSharkyClient(provider, undefined, 'mainnet')

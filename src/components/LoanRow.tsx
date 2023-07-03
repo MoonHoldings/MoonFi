@@ -5,7 +5,7 @@ import tw from 'twrnc'
 
 import Fonts from '../utils/Fonts'
 
-export const LoanRow = ({ loan, onRepay }: { loan: any; onRepay: any }) => {
+export const LoanRow = ({ loan, onRepay, onExtend }: { loan: any; onRepay: any; onExtend: any }) => {
   const defaultImage = 'https://sharky.fi/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FMoonHolders.10dd0302.jpg&w=128&q=75'
 
   const getRemainingDays = (loan: any) => {
@@ -43,7 +43,7 @@ export const LoanRow = ({ loan, onRepay }: { loan: any; onRepay: any }) => {
         </TouchableOpacity>
       </View>
       <View style={tw`flex min-w-[15%] justify-center ml-2`}>
-        <TouchableOpacity style={{ ...tw`border border-2 border-[#63ECD2] rounded-lg items-center py-[8px] px-4 w-auto`, opacity: 0.5 }} onPress={() => console.log('asd')} disabled={true}>
+        <TouchableOpacity style={{ ...tw`border border-2 border-[#63ECD2] rounded-lg items-center py-[8px] px-4 w-auto`, opacity: 1 }} onPress={onExtend}>
           <Text
             style={{
               ...tw`text-[#63ECD2] text-[12px]`,
