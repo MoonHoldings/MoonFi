@@ -135,15 +135,15 @@ export function LoansScreen({ navigation }: any) {
         </View>
         <View style={tw`flex flex-row w-full mt-1`}>
           <View style={tw`flex flex-row flex-1 justify-start items-center`}>
-            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{activeLoansCount}</Text>
+            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{activeLoansCount ?? '-'}</Text>
           </View>
           <View style={tw`flex flex-row flex-1 justify-center items-center`}>
             <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
-            <Text style={{ ...tw`text-white text-center text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{borrowedValue?.toFixed(4)}</Text>
+            <Text style={{ ...tw`text-white text-center text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{borrowedValue ? borrowedValue?.toFixed(4) : '-'}</Text>
           </View>
           <View style={tw`flex flex-row flex-1 justify-end items-center`}>
             <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
-            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{interestOwed?.toFixed(4)}</Text>
+            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{interestOwed ? interestOwed?.toFixed(4) : '-'}</Text>
           </View>
         </View>
       </View>
