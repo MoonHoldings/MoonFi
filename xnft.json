@@ -1,6 +1,6 @@
 {
   "name": "MoonFi",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "storage": "aws",
   "description": "MoonHoldings x Sharkify",
   "website": "https://www.moonholdings.xyz/",
