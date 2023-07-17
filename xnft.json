@@ -1,8 +1,8 @@
 {
   "name": "MoonFi",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "storage": "aws",
-  "description": "MoonHoldings x Sharkify",
+  "description": "MoonHoldings x SharkyFi",
   "website": "https://www.moonholdings.xyz/",
   "kind": "app",
   "icon": {
@@ -10,7 +10,7 @@
     "md": "./assets/icon.png",
     "lg": "./assets/icon.png"
   },
-  "contact": "test@gmail.com",
+  "contact": "support@moonholdings.com",
   "screenshots": ["./assets/screenShot.png"],
   "entrypoints": {
     "default": {

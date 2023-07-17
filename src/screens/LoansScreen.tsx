@@ -106,13 +106,13 @@ export function LoansScreen({ navigation }: any) {
   }
 
   const activeLoansCount = myLoans?.getLoans?.data?.length
-  const borrowedValue = myLoans?.getLoans?.data?.reduce((accumulator: number, loan: any) => {
+  const borrowedValue: number = myLoans?.getLoans?.data?.reduce((accumulator: number, loan: any) => {
     return accumulator + loan?.principalLamports / LAMPORTS_PER_SOL
   }, 0)
-  const owedValue = myLoans?.getLoans?.data?.reduce((accumulator: number, loan: any) => {
+  const owedValue: number = myLoans?.getLoans?.data?.reduce((accumulator: number, loan: any) => {
     return accumulator + loan?.totalOwedLamports / LAMPORTS_PER_SOL
   }, 0)
-  const interestOwed = owedValue - borrowedValue
+  const interestOwed: number = owedValue - borrowedValue
 
   const data = [...getNonHistoricalOffers()]
 
@@ -139,11 +139,11 @@ export function LoansScreen({ navigation }: any) {
           </View>
           <View style={tw`flex flex-row flex-1 justify-center items-center`}>
             <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
-            <Text style={{ ...tw`text-white text-center text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{borrowedValue ? borrowedValue?.toFixed(4) : '-'}</Text>
+            <Text style={{ ...tw`text-white text-center text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{borrowedValue ? borrowedValue?.toPrecision(2) : '-'}</Text>
           </View>
           <View style={tw`flex flex-row flex-1 justify-end items-center`}>
             <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
-            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{interestOwed ? interestOwed?.toFixed(4) : '-'}</Text>
+            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{interestOwed ? interestOwed?.toPrecision(2) : '-'}</Text>
           </View>
         </View>
       </View>

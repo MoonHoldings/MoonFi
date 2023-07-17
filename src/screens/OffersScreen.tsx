@@ -62,6 +62,7 @@ export function OffersScreen({ navigation }: any) {
           variables: {
             args: {
               filter: {
+                // lenderWallet: "HtPS1sNkzVMp1VkC7iuW2AZanUnD28vaVgEEJ3gUwfYJ",
                 lenderWallet: solPublicKey,
                 type: 'offered',
               },
@@ -82,6 +83,7 @@ export function OffersScreen({ navigation }: any) {
       if (solPublicKey && !loadingHistoricalOffers) {
         getMyHistoricalOffers({
           variables: {
+            // lender: "HtPS1sNkzVMp1VkC7iuW2AZanUnD28vaVgEEJ3gUwfYJ",
             lender: solPublicKey,
           },
           pollInterval: 3_600_000,
@@ -182,11 +184,11 @@ export function OffersScreen({ navigation }: any) {
     )
   }
 
-  const currentOffers = myOffers?.getLoans?.data?.reduce((accumulator: number, offer: any) => {
+  const currentOffers: number = myOffers?.getLoans?.data?.reduce((accumulator: number, offer: any) => {
     return accumulator + offer?.principalLamports / LAMPORTS_PER_SOL
   }, 0)
 
-  const expectedInterest = myOffers?.getLoans?.data?.reduce((accumulator: number, offer: any) => {
+  const expectedInterest: number = myOffers?.getLoans?.data?.reduce((accumulator: number, offer: any) => {
     return (
       accumulator + parseFloat(calculateLendInterest(offer?.principalLamports / LAMPORTS_PER_SOL, offer?.orderBook?.duration, offer?.orderBook?.apy, offer?.orderBook?.feePermillicentage) as string)
     )
@@ -221,7 +223,7 @@ export function OffersScreen({ navigation }: any) {
           </View>
           <View style={tw`flex flex-row flex-1 justify-end items-center`}>
             <Image source={require('/assets/sol.svg')} style={tw`w-4 h-4 mr-[4px]`} />
-            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{expectedInterest}</Text>
+            <Text style={{ ...tw`text-white text-[16px]`, fontFamily: Fonts.PoppinsLight }}>{expectedInterest?.toPrecision(2)}</Text>
           </View>
         </View>
       </View>
